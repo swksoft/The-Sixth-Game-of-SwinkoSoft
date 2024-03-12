@@ -36,17 +36,14 @@ func _ready():
 	#emitter.connect("pijers", _on_player_pijers(player))
 	
 	''' Test: '''
-	#tier_calculate()
-	#get_damage_from_enemy({"health": 5})
-	#print(tier)
-	#print(health)
+	get_damage_from_enemy({"health": 2, "tier": 1})
 
 func get_damage_from_enemy(enemy):
-	var health_substract = health - enemy.health
-	if health_substract <= 0: health -= enemy.health
-	#elif health_substract <= 2 && enemy.tier == tier: health -= health_substract
-	elif health_substract <= 2: health -= health_substract
-	elif health_substract <= 5: health += 1
+	var health_difference = health - enemy.health
+	if health_difference <= 0: health -= enemy.health
+	elif health_difference == 1 && enemy.tier == tier: health -= 2
+	elif health_difference <= 2: health -= 1
+	elif health_difference <= 5: health += 1
 	tier_calculate()
 
 func tier_calculate():
