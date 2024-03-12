@@ -64,7 +64,7 @@ func _physics_process(_delta):
 
 func _process(_delta):
 	#print(current_state)
-	
+	print("kek")
 	if is_moving:
 		return
 	
