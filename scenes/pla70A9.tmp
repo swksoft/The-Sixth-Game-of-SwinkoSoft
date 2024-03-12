@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://ckyq2d54v1ani"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_bqjyo"]
+[ext_resource type="Texture2D" uid="uid://bs0cq12ffcvpm" path="res://assets/tiles/tilemap_packed.png" id="2_p65fi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xglp0"]
+atlas = ExtResource("2_p65fi")
+region = Rect2(0, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xy1q8"]
+atlas = ExtResource("2_p65fi")
+region = Rect2(0, 144, 16, 16)
+
+[node name="Player" type="Sprite2D"]
+texture = SubResource("AtlasTexture_xglp0")
+script = ExtResource("1_bqjyo")
+health = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_xy1q8")
+
+[node name="HealthLabel" type="Label" parent="Sprite2D"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -32.0
+offset_right = 24.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 14
+text = "Health"
+horizontal_alignment = 1
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 16)
+collide_with_areas = true
+collide_with_bodies = false

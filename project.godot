@@ -32,7 +32,6 @@ window/stretch/mode="canvas_items"
 
 movie_writer/movie_file="C:/Users/COUGA/Documents/GitHub/The Sixth Game of SwinkoSoft/movie/a.avi"
 movie_writer/disable_vsync=true
-movie_writer/fps=24
 
 [input]
 

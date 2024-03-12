@@ -1,41 +1,39 @@
 extends Node2D
 
-#@export var tier: int = 1
-@export var health: int = 3
+@export_range(1,9) var health = 3
 
 var tier: int
 
 @onready var health_label = $Sprite/HealthLabel
 @onready var sprite = $Sprite
+@onready var emitter = get_parent().get_node("Player")
 
 func tier_check():
-	if health >= 1 and health <= 3:
-		tier = 1
-	elif health >= 4 and health <= 6:
-		tier = 2
-	elif health >= 7 and health <= 9:
-		tier = 3
-
-func _ready():
-	''' Define Health and Tier: '''
-	health_label.text = str(health)
-	tier_check()
-	
-	''' Change sprite: '''
 	var atlas_texture = AtlasTexture.new()
 	atlas_texture.atlas = load("res://assets/tiles/tilemap_packed.png")
 	
-	if tier == 1:
+	if health >= 1 and health <= 3:
 		atlas_texture.region = Rect2(48, 160, 16, 16)
-	elif tier == 2:
+		tier = 1
+	elif health >= 4 and health <= 6:
 		atlas_texture.region = Rect2(64, 160, 16, 16)
-	elif tier == 3:
+		tier = 2
+	elif health >= 7 and health <= 9:
 		atlas_texture.region = Rect2(16, 144, 16, 16)
-	
+		tier = 3
+
 	sprite.texture = atlas_texture
+	
+	health_label.text = str(health)
+
+func _ready():
+	''' Define Health and Tier, Change sprite: '''
+	tier_check()
 	
 	#print(tier)
 	#print(health)
+	
+	#emitter.connect("pijers", _on_player_pijers(player))
 	
 	''' Test: '''
 	#tier_calculate()
@@ -66,3 +64,4 @@ func _on_player_pijers(player):
 	player.health = health
 	player.tier_check()
 	queue_free()
+
