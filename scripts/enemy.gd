@@ -1,4 +1,4 @@
-extends Node2D
+extends CharacterBody2D
 
 @export_range(1,9) var health = 3
 

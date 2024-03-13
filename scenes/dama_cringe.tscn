@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://blx1ox7mnt3n5"]
+
+[ext_resource type="Script" path="res://scripts/dama_cringe.gd" id="1_ctmym"]
+[ext_resource type="Texture2D" uid="uid://bs0cq12ffcvpm" path="res://assets/tiles/tilemap_packed.png" id="2_q5qr7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iron0"]
+atlas = ExtResource("2_q5qr7")
+region = Rect2(48, 128, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vx3if"]
+size = Vector2(112, 112)
+
+[node name="DamaCringe" type="Node2D"]
+script = ExtResource("1_ctmym")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_iron0")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_vx3if")
