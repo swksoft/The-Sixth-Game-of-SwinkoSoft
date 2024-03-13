@@ -13,6 +13,7 @@ enum State {
 }
 
 var current_state
+var attacking = false
 
 @onready var tile_map = get_parent().get_parent().get_node("TileMap")
 @onready var sprite = $Sprite2D
@@ -52,7 +53,6 @@ func _ready():
 	tier_check()
 
 func _physics_process(_delta):
-	print(is_moving)
 	if is_moving == false:
 		return
 	
@@ -63,8 +63,8 @@ func _physics_process(_delta):
 	sprite.global_position = sprite.global_position.move_toward(global_position, 1)
 
 func _process(_delta):
-	#print(current_state)
-	if is_moving:
+	print(is_moving)
+	if is_moving || attacking:
 		return
 	
 	if Input.is_action_pressed("up"):
@@ -95,17 +95,24 @@ func move(direction: Vector2):
 	raycast.force_raycast_update()
 	
 	if raycast.is_colliding():
-		is_moving = true
 		#attack()
 		
+		#sprite.global_position = tile_map.map_to_local(target_tile)
+		#animation.play("Attack")
+		#await animation.animation_finished
+		#await get_tree().create_timer(0.5).timeout
+		#sprite.global_position = tile_map.map_to_local(current_tile)
+		is_moving = true
+		attacking = true
 		sprite.global_position = tile_map.map_to_local(target_tile)
 		animation.play("Attack")
-		await animation.animation_finished
 		await get_tree().create_timer(0.5).timeout
 		sprite.global_position = tile_map.map_to_local(current_tile)
+		is_moving = false
+		attacking = false
 		
 		if tier == 0:
-			print(raycast.get_collider_shape())
+			#print(raycast.get_collider_shape())
 			emit_signal("damage", self)
 		return
 	
