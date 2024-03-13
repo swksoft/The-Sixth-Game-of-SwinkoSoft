@@ -130,13 +130,31 @@ func _on_area_2d_body_entered(body):
 			health += body.health
 			body.get_damage(current_state, health, tier)	
 		else:
-			body.get_damage(current_state, health, tier)	
+			var enemy_health = body.health
+			var enemy_tier = body.tier
+			body.get_damage(current_state, health, tier)
+			get_damage_from_enemy({"health": enemy_health, "tier": enemy_tier})
 		
 		tier_check()
 	#if tier == 0:
 		#print(raycast.get_collider_shape())
 	#	emit_signal("damage", self)
 	attack_sfx.playing = true
+
+func get_damage_from_enemy(enemy):
+	var health_difference = health - enemy.health
+	print(health_difference)
+	if health_difference <= 0: health -= enemy.health
+	elif health_difference == 1 && enemy.tier == tier: health -= 2
+	elif health_difference <= 2: health -= 1
+	elif health_difference <= 5: health += 1
+	tier_check()
+	check_death()
+
+func check_death():
+	if health <= 0:
+		current_state = State.GHOST
+		health = 0
 
 func _on_hud_game_over():
 	current_state = 2
