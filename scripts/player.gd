@@ -1,7 +1,5 @@
 extends Sprite2D
 
-signal damage(area)
-
 @export_range(0,9) var health = 0
 
 var is_moving = false
@@ -10,12 +8,13 @@ var tier = 0
 enum State {
 	GHOST,
 	TRANS,
+	ITS_OVER
 }
 
 var current_state
 var attacking = false
 
-@onready var tile_map = get_parent().get_parent().get_node("TileMap")
+@onready var tile_map = get_parent().get_node("TileMap")
 @onready var sprite = $Sprite2D
 @onready var raycast = $RayCast2D
 @onready var health_label = $Sprite2D/HealthLabel
@@ -39,13 +38,14 @@ func tier_check():
 		tier = 2
 		atlas_texture.region = Rect2(64, 160, 16, 16)
 		current_state = State.TRANS
-	elif health >= 7 and health <= 9:
+	elif health >= 7:
+		if health > 9:
+			health = 9
 		tier = 3
 		atlas_texture.region = Rect2(16, 144, 16, 16)
 		current_state = State.TRANS
 
 	sprite.texture = atlas_texture
-	
 	health_label.text = str(health)
 
 func _ready():
@@ -63,18 +63,26 @@ func _physics_process(_delta):
 	sprite.global_position = sprite.global_position.move_toward(global_position, 1)
 
 func _process(_delta):
-	print(is_moving)
+	#print(is_moving)
+	if current_state == 2:
+		return
+	
 	if is_moving || attacking:
 		return
 	
-	if Input.is_action_pressed("up"):
-		move(Vector2.UP)
-	elif Input.is_action_pressed("down"):
-		move(Vector2.DOWN)
-	elif Input.is_action_pressed("left"):
-		move(Vector2.LEFT)
-	elif Input.is_action_pressed("right"):
-		move(Vector2.RIGHT)
+	if current_state == 0 || 1:
+		if Input.is_action_pressed("up"):
+			move(Vector2.UP)
+		elif Input.is_action_pressed("down"):
+			move(Vector2.DOWN)
+		elif Input.is_action_pressed("left"):
+			move(Vector2.LEFT)
+		elif Input.is_action_pressed("right"):
+			move(Vector2.RIGHT)
+		elif Input.is_action_just_pressed("reset"):
+			get_tree().reload_current_scene.call_deferred()
+	else:
+		return
 		
 func move(direction: Vector2):
 	''' Get current tile Vector2i: '''
@@ -95,28 +103,35 @@ func move(direction: Vector2):
 	raycast.force_raycast_update()
 	
 	if raycast.is_colliding():
-		#attack()
-		
-		#sprite.global_position = tile_map.map_to_local(target_tile)
-		#animation.play("Attack")
-		#await animation.animation_finished
-		#await get_tree().create_timer(0.5).timeout
-		#sprite.global_position = tile_map.map_to_local(current_tile)
-		is_moving = true
 		attacking = true
+		
 		sprite.global_position = tile_map.map_to_local(target_tile)
 		animation.play("Attack")
 		await get_tree().create_timer(0.5).timeout
 		sprite.global_position = tile_map.map_to_local(current_tile)
-		is_moving = false
-		attacking = false
 		
-		if tier == 0:
-			#print(raycast.get_collider_shape())
-			emit_signal("damage", self)
+		attacking = false
 		return
 	
 	# Move Player:
 	is_moving = true
 	global_position = tile_map.map_to_local(target_tile)
 	sprite.global_position = tile_map.map_to_local(current_tile)
+	
+	GLOBAL.time_left -= 1
+
+func _on_area_2d_body_entered(body):
+	if body.has_method("get_damage"):
+		if current_state == 0:
+			health += body.health
+			body.queue_free()
+		else:
+			body.get_damage(current_state, health, tier)	
+		
+		tier_check()
+	#if tier == 0:
+		#print(raycast.get_collider_shape())
+	#	emit_signal("damage", self)
+
+func _on_hud_game_over():
+	current_state = 2

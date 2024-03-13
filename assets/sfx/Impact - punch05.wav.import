@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cbjncv1hxunl5"
+path="res://.godot/imported/Impact - punch05.wav-52258bcc48d9873306851f7c3677cc2b.sample"
+
+[deps]
+
+source_file="res://assets/sfx/Impact - punch05.wav"
+dest_files=["res://.godot/imported/Impact - punch05.wav-52258bcc48d9873306851f7c3677cc2b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
