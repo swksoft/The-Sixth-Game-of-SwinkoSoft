@@ -4,16 +4,33 @@ extends CharacterBody2D
 
 var tier: int
 
+var death01_sfx = preload("res://assets/sfx/Impact - punch03.wav")
+var death02_sfx = preload("res://assets/sfx/Impact - punch05.wav")
+var death03_sfx = preload("res://assets/sfx/Impact - Punch09 - Splat.wav")
+
 @onready var health_label = $Sprite/HealthLabel
 @onready var sprite = $Sprite
 @onready var emitter = get_parent().get_parent().get_node("Player")
 @onready var animation = $Animation
 @onready var tile_map = get_parent().get_parent().get_node("TileMap")
+@onready var death_sfx = $DeathSFX
 
 func get_damage(player_state, player_health, player_tier):
 	if player_state == 0:
 		#if animationPlayer.is_playing(): return  
+		if tier == 1:
+			death_sfx.stream = death01_sfx
+		elif tier == 2:
+			death_sfx.stream = death02_sfx
+		elif tier == 3:
+			death_sfx.stream = death03_sfx
+		
+		animation.play("death")
+		death_sfx.play()
+		await animation.animation_finished
+		
 		queue_free()
+		
 	elif player_state == 1:
 		print("concha")
 
@@ -105,8 +122,6 @@ func alert_mode():
 func _process(delta):
 	if GLOBAL.time_left <= 0:
 		await alert_mode()
-		
-		
 
 #func _on_collision(area):
 	#if area.is_in_group("enemy"):

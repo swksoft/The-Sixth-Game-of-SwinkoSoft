@@ -20,6 +20,8 @@ var attacking = false
 @onready var health_label = $Sprite2D/HealthLabel
 @onready var attack_sprite = $Sprite2D/AttackSprite
 @onready var animation = $AnimationPlayer
+@onready var attack_sfx = $AttackSFX
+@onready var step_sfx = $StepSFX
 
 func tier_check():
 	var atlas_texture = AtlasTexture.new()
@@ -119,12 +121,14 @@ func move(direction: Vector2):
 	sprite.global_position = tile_map.map_to_local(current_tile)
 	
 	GLOBAL.time_left -= 1
+	
+	step_sfx.play()
 
 func _on_area_2d_body_entered(body):
 	if body.has_method("get_damage"):
 		if current_state == 0:
 			health += body.health
-			body.queue_free()
+			body.get_damage(current_state, health, tier)	
 		else:
 			body.get_damage(current_state, health, tier)	
 		
@@ -132,6 +136,7 @@ func _on_area_2d_body_entered(body):
 	#if tier == 0:
 		#print(raycast.get_collider_shape())
 	#	emit_signal("damage", self)
+	attack_sfx.playing = true
 
 func _on_hud_game_over():
 	current_state = 2
