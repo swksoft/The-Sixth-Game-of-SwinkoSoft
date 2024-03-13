@@ -169,9 +169,6 @@ layer_0/tile_data = PackedInt32Array(-458760, 0, 0, -393224, 0, 0, -327688, 0, 0
 
 [node name="Entities" type="Node" parent="."]
 
-[node name="Player" parent="Entities" instance=ExtResource("1_lxrc1")]
-position = Vector2(8, 24)
-
 [node name="Enemy2" parent="Entities" instance=ExtResource("3_r6jh7")]
 position = Vector2(88, 120)
 health = 1
@@ -179,3 +176,8 @@ health = 1
 [node name="Enemy" parent="Entities" instance=ExtResource("3_r6jh7")]
 position = Vector2(88, 72)
 health = 1
+
+[node name="Player" parent="Entities" instance=ExtResource("1_lxrc1")]
+position = Vector2(8, 24)
+
+[connection signal="damage" from="Entities/Player" to="Entities/Enemy" method="_on_player_damage"]

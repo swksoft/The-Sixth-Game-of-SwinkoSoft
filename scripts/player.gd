@@ -64,7 +64,6 @@ func _physics_process(_delta):
 
 func _process(_delta):
 	#print(current_state)
-	print("kek")
 	if is_moving:
 		return
 	
@@ -98,19 +97,17 @@ func move(direction: Vector2):
 	if raycast.is_colliding():
 		is_moving = true
 		#attack()
+		
+		sprite.global_position = tile_map.map_to_local(target_tile)
 		animation.play("Attack")
 		await animation.animation_finished
-		sprite.global_position = tile_map.map_to_local(target_tile)
 		await get_tree().create_timer(0.5).timeout
 		sprite.global_position = tile_map.map_to_local(current_tile)
-		is_moving = false
 		
 		if tier == 0:
 			print(raycast.get_collider_shape())
 			emit_signal("damage", self)
-			return
-		else:
-			return
+		return
 	
 	# Move Player:
 	is_moving = true

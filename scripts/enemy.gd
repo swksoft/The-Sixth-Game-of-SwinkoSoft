@@ -40,7 +40,8 @@ func _ready():
 
 func get_damage_from_enemy(enemy):
 	var health_difference = health - enemy.health
-	if health_difference <= 0: health -= enemy.health
+	if health_difference <= 0: health = enemy.health
+	elif health_difference <= 0: health -= enemy.health
 	elif health_difference == 1 && enemy.tier == tier: health -= 2
 	elif health_difference <= 2: health -= 1
 	elif health_difference <= 5: health += 1
@@ -57,8 +58,7 @@ func tier_calculate():
 	#if area.is_in_group("enemy"):
 		#get_damage()
 
-func _on_player_pijers(player):
+func _on_player_damage(player):
 	player.health = health
 	player.tier_check()
 	queue_free()
-
