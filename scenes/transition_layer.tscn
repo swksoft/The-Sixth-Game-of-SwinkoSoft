@@ -1,0 +1,144 @@
+[gd_scene load_steps=7 format=3 uid="uid://dcjapanwpj8kc"]
+
+[ext_resource type="Script" path="res://scripts/transition_layer.gd" id="1_jnwt2"]
+
+[sub_resource type="Animation" id="Animation_7oove"]
+resource_name = "fade_in"
+length = 2.00001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1.6, 10.9283),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_cw3vd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DialogueLabel:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DialogueLabel:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(10, 78.5)]
+}
+
+[sub_resource type="Animation" id="Animation_w7vcl"]
+resource_name = "fade_out"
+length = 2.00001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1.6, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_m41bd"]
+resource_name = "dialogue"
+length = 4.50001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DialogueLabel:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 4, 4.5),
+"transitions": PackedFloat32Array(1.77531, 1, 1, 1.77531),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DialogueLabel:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 4, 4.5),
+"transitions": PackedFloat32Array(0.757858, 2, 1.86607, 1),
+"update": 0,
+"values": [Vector2(-10, 78.5), Vector2(-2.5, 78.5), Vector2(2.5, 78.5), Vector2(25, 78.5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6rbl8"]
+_data = {
+"RESET": SubResource("Animation_cw3vd"),
+"dialogue": SubResource("Animation_m41bd"),
+"fade_in": SubResource("Animation_7oove"),
+"fade_out": SubResource("Animation_w7vcl")
+}
+
+[node name="TransitionLayer" type="CanvasLayer"]
+visible = false
+script = ExtResource("1_jnwt2")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_6rbl8")
+}
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="DialogueLabel" type="Label" parent="."]
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 10.0
+offset_top = 78.5
+offset_right = 330.0
+offset_bottom = 101.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "\"Texto de ejemplo.\""
+horizontal_alignment = 1
+vertical_alignment = 1
