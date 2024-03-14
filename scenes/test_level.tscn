@@ -177,10 +177,11 @@ position = Vector2(8, 24)
 
 [node name="Enemy2" parent="Enemies" instance=ExtResource("3_r6jh7")]
 position = Vector2(88, 120)
-health = 5
+health = 6
 
 [node name="Enemy" parent="Enemies" instance=ExtResource("3_r6jh7")]
 position = Vector2(88, 72)
+health = 2
 
 [node name="Enemy3" parent="Enemies" instance=ExtResource("3_r6jh7")]
 position = Vector2(24, 120)

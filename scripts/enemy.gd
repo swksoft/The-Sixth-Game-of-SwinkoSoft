@@ -24,15 +24,14 @@ func get_damage(player_state, player_health, player_tier):
 			death_sfx.stream = death02_sfx
 		elif tier == 3:
 			death_sfx.stream = death03_sfx
-		
 		animation.play("death")
 		death_sfx.play()
 		await animation.animation_finished
-		
 		queue_free()
 		
 	elif player_state == 1:
-		print("concha")
+		get_damage_from_enemy({"health": player_health, "tier": player_tier})
+		#print("concha")
 
 func tier_check():
 	var atlas_texture = AtlasTexture.new()
@@ -71,12 +70,12 @@ func _ready():
 
 func get_damage_from_enemy(enemy):
 	var health_difference = health - enemy.health
-	if health_difference <= 0: health = enemy.health
-	elif health_difference <= 0: health -= enemy.health
+	if health_difference <= 0: health -= enemy.health
 	elif health_difference == 1 && enemy.tier == tier: health -= 2
 	elif health_difference <= 2: health -= 1
 	elif health_difference <= 5: health += 1
-	tier_calculate()
+	tier_check()
+	check_death()
 
 func tier_calculate():
 	var health_divided_by_three = health/3
@@ -84,6 +83,9 @@ func tier_calculate():
 	if health_divided_by_three <= 1: tier = 1
 	elif health_divided_by_three <= 2: tier = 2
 	else: tier = 3
+	
+func check_death():
+	if health <= 0: queue_free()
 
 func move(direction):
 	''' Get current tile Vector2i: '''
