@@ -31,7 +31,9 @@ func get_damage(player_state, player_health, player_tier):
 		
 	elif player_state == 1:
 		get_damage_from_enemy({"health": player_health, "tier": player_tier})
+		
 		#print("concha")
+	GLOBAL.enemies_left -= 1
 
 func tier_check():
 	var atlas_texture = AtlasTexture.new()

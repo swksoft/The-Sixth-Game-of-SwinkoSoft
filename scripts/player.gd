@@ -45,7 +45,7 @@ func tier_check():
 			health = 9
 		tier = 3
 		atlas_texture.region = Rect2(16, 144, 16, 16)
-		current_state = State.TRANS
+		current_state = State.TRANS #rights
 
 	sprite.texture = atlas_texture
 	health_label.text = str(health)
@@ -128,7 +128,7 @@ func _on_area_2d_body_entered(body):
 	if body.has_method("get_damage"):
 		if current_state == 0:
 			health += body.health
-			body.get_damage(current_state, health, tier)	
+			body.get_damage(current_state, health, tier)
 		else:
 			var enemy_health = body.health
 			var enemy_tier = body.tier

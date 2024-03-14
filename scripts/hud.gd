@@ -3,6 +3,7 @@ extends Control
 signal game_over
 
 var alarm = true
+var transition = true
 
 @onready var player = get_parent().get_node("Player")
 @onready var enemies = get_parent().get_node("Enemies")
@@ -25,7 +26,16 @@ func alert_mode():
 	if alarm:
 		alarm = false
 		alarm_sfx.play()
-	
+
+func win():
+	if transition:
+		transition = false
+		
+		%TimeLabel.visible = false
+		%EnemyLabel.visible = false
+		await get_tree().create_timer(1.0).timeout
+		TransitionLayer.change_scene("res://scenes/test_level.tscn")
+
 func _process(delta):
 	%TimeLabel.text = "Time Left: " + str(GLOBAL.time_left)
 	%EnemyLabel.text = "Enemies Left: " + str(GLOBAL.enemies_left)
@@ -33,6 +43,10 @@ func _process(delta):
 	if GLOBAL.time_left <= 0:
 		emit_signal("game_over")
 		alert_mode()
+	
+	if GLOBAL.enemies_left <= 0:
+		emit_signal("game_over")
+		win()
 
 func _on_restart_button_pressed():
 	get_tree().reload_current_scene.call_deferred()
