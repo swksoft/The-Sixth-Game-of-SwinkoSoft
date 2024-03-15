@@ -113,6 +113,7 @@ func move(direction: Vector2):
 		sprite.global_position = tile_map.map_to_local(current_tile)
 		
 		attacking = false
+		if health > 0: global_position = tile_map.map_to_local(target_tile)
 		return
 	
 	# Move Player:
