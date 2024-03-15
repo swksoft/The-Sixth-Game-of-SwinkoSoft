@@ -153,8 +153,6 @@ func _on_area_2d_body_entered(body):
 func get_damage_from_enemy(enemy):
 	var health_difference = health - enemy.health
 	
-	print(health_difference)
-	
 	if health_difference <= 0: health -= enemy.health
 	elif health_difference == 1 && enemy.tier == tier: health -= 2
 	elif health_difference <= 2: health -= 1
