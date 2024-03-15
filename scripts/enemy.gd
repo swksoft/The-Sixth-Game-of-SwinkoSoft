@@ -3,7 +3,6 @@ extends CharacterBody2D
 @export_range(1,9) var health = 1
 
 var tier: int
-
 var death01_sfx = preload("res://assets/sfx/Impact - punch03.wav")
 var death02_sfx = preload("res://assets/sfx/Impact - punch05.wav")
 var death03_sfx = preload("res://assets/sfx/Impact - Punch09 - Splat.wav")
@@ -16,25 +15,24 @@ var death03_sfx = preload("res://assets/sfx/Impact - Punch09 - Splat.wav")
 @onready var death_sfx = $DeathSFX
 
 func get_damage(player_state, player_health, player_tier):
+	death_sfx.play()
+	
 	if player_state == 0:
 		#if animationPlayer.is_playing(): return  
-		if tier == 1:
-			death_sfx.stream = death01_sfx
-		elif tier == 2:
-			death_sfx.stream = death02_sfx
-		elif tier == 3:
-			death_sfx.stream = death03_sfx
+		
 		animation.play("death")
-		death_sfx.play()
 		await animation.animation_finished
+		
 		queue_free()
 		
-	elif player_state == 1:
-		get_damage_from_enemy({"health": player_health, "tier": player_tier})
 		
-		#print("concha")
-	GLOBAL.enemies_left -= 1
-
+	elif player_state == 1:
+		#visible = false
+		#await get_tree().create_timer(0.3).timeout
+		
+		get_damage_from_enemy({"health": player_health, "tier": player_tier})
+		GLOBAL.enemies_left -= 1
+	
 func tier_check():
 	var atlas_texture = AtlasTexture.new()
 	atlas_texture.atlas = load("res://assets/tiles/tilemap_packed.png")
@@ -55,27 +53,28 @@ func tier_check():
 		atlas_texture.region = Rect2(16, 144, 16, 16)
 
 	sprite.texture = atlas_texture
-	
 	health_label.text = str(health)
 
 func _ready():
 	''' Define Health and Tier, Change sprite: '''
 	tier_check()
 	
-	#print(tier)
-	#print(health)
+	''' SFX '''
+	if tier == 1: death_sfx.stream = death01_sfx
+	elif tier == 2: death_sfx.stream = death02_sfx
+	elif tier == 3: death_sfx.stream = death03_sfx
 	
-	#emitter.connect("pijers", _on_player_pijers(player))
-	
-	''' Test: '''
 	#get_damage_from_enemy({"health": 2, "tier": 1})
 
 func get_damage_from_enemy(enemy):
+	
 	var health_difference = health - enemy.health
+	
 	if health_difference <= 0: health -= enemy.health
 	elif health_difference == 1 && enemy.tier == tier: health -= 2
 	elif health_difference <= 2: health -= 1
 	elif health_difference <= 5: health += 1
+	
 	tier_check()
 	check_death()
 
@@ -87,7 +86,8 @@ func tier_calculate():
 	else: tier = 3
 	
 func check_death():
-	if health <= 0: queue_free()
+	if health <= 0:
+		queue_free()
 
 func move(direction):
 	''' Get current tile Vector2i: '''
@@ -104,26 +104,25 @@ func move(direction):
 	if tile_data.get_custom_data("walkable") == false:
 		return
 	
-	
-		
 	global_position = tile_map.map_to_local(target_tile)
 	#sprite.global_position = tile_map.map_to_local(current_tile)
 
 func alert_mode():
+	''' Movimiento en direcciones random (o algo así) '''
 	animation.play("alert_mode")
 	var rng = randf()
 	
 	if rng >= 0 and rng <= 0.25:
-		await move(Vector2.UP)
+		move(Vector2.UP)
 	elif rng >= 0.26 and rng <= 0.5:
-		await move(Vector2.DOWN)
+		move(Vector2.DOWN)
 	elif rng >= 0.51 and rng <= 0.75:
-		await move(Vector2.LEFT)
+		move(Vector2.LEFT)
 	elif rng >= 0.76 and rng <= 1.0:
-		await move(Vector2.RIGHT)
-		
+		move(Vector2.RIGHT)
 
-func _process(delta):
+func _process(_delta):
+	''' Chequea modo alerta (Game Over)'''
 	if GLOBAL.time_left <= 0:
 		await alert_mode()
 

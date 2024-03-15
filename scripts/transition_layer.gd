@@ -1,25 +1,30 @@
 extends CanvasLayer
 
+''' Seleccción de diálogos '''
 var dialogue := [
 	"\"Billions must die.\""
 ]
 
 @onready var animation = $Animation
 @onready var dialogue_label = $DialogueLabel
-@onready var timer = $Timer
 
-func change_scene(target: String) -> void:
-	%DialogueLabel.text = dialogue[0]
+func change_scene(target: String, d_number = 0) -> void:
+	''' Selección de diálogo '''
+	%DialogueLabel.text = dialogue[d_number]
 	
+	''' Animación Fade-in'''
 	visible = true
 	animation.play("fade_in")
-	print("aiya!")
 	await animation.animation_finished
+	
+	''' Diálogo '''
 	animation.play("dialogue")
 	await animation.animation_finished
 	
+	''' Cambio de escena '''
 	get_tree().change_scene_to_file(target)
 	
+	''' Animación Fade-out '''
 	animation.play("fade_out")
 	await animation.animation_finished
 	#timer.start()
@@ -27,8 +32,12 @@ func change_scene(target: String) -> void:
 	#TransitionLayer.change_scene(target)
 	
 	#TransitionLayer.get_tree().change_scene_to_file(target)
-	
-func _on_timer_timeout():
+
+func reset_scene() -> void:
+	animation.speed_scale = 24
+	animation.play("fade_in")
+	await animation.animation_finished
+	get_tree().reload_current_scene.call_deferred()
 	animation.play("fade_out")
 	await animation.animation_finished
-	visible = false
+	animation.speed_scale = 1
