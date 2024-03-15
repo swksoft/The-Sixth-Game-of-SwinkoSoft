@@ -97,7 +97,6 @@ func move(direction):
 		current_tile.x + direction.x,
 		current_tile.y + direction.y
 	)
-	#prints(current_tile, target_tile)
 	''' Get data from target tile: '''
 	var tile_data: TileData = tile_map.get_cell_tile_data(0, target_tile)
 	

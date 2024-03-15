@@ -132,7 +132,6 @@ _data = {
 }
 
 [node name="Player" type="Sprite2D"]
-self_modulate = Color(1, 1, 1, 0)
 texture = SubResource("AtlasTexture_xglp0")
 script = ExtResource("1_bqjyo")
 
@@ -166,18 +165,17 @@ emitting = false
 lifetime = 0.1
 one_shot = true
 
+[node name="RayCast2D" type="RayCast2D" parent="Sprite2D"]
+target_position = Vector2(0, 16)
+collide_with_areas = true
+collide_with_bodies = false
+
 [node name="Hitbox" type="Area2D" parent="Sprite2D"]
 monitoring = false
 monitorable = false
 
 [node name="CollisionHitbox" type="CollisionShape2D" parent="Sprite2D/Hitbox"]
 shape = SubResource("RectangleShape2D_jt6g3")
-
-[node name="RayCast2D" type="RayCast2D" parent="."]
-exclude_parent = false
-target_position = Vector2(0, 16)
-collide_with_areas = true
-collide_with_bodies = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

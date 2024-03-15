@@ -15,7 +15,9 @@ enum State {
 
 @onready var tile_map = get_parent().get_node("TileMap")
 @onready var sprite = $Sprite2D
-@onready var raycast = $RayCast2D
+#@onready var raycast = $RayCast2D
+@onready var raycast = $Sprite2D/RayCast2D
+
 @onready var health_label = $Sprite2D/HealthLabel
 @onready var attack_sprite = $Sprite2D/AttackSprite
 @onready var animation = $AnimationPlayer
@@ -67,7 +69,6 @@ func _physics_process(_delta):
 	sprite.global_position = sprite.global_position.move_toward(global_position, 1)
 
 func _process(_delta):
-	#print(is_moving)
 	''' Estado ITS_OVER para Game Over '''
 	if current_state == 2: return
 	
@@ -91,7 +92,7 @@ func move(direction: Vector2):
 		current_tile.x + direction.x,
 		current_tile.y + direction.y
 	)
-	#prints(current_tile, target_tile)
+	prints(current_tile, target_tile)
 	''' Get data from target tile: '''
 	var tile_data: TileData = tile_map.get_cell_tile_data(0, target_tile)
 	
@@ -101,18 +102,22 @@ func move(direction: Vector2):
 	raycast.target_position = direction * 16
 	raycast.force_raycast_update()
 	
-	
 	''' IMPORTANTE '''
 	if raycast.is_colliding():
 		attacking = true
 		
+		#global_position = tile_map.map_to_local(target_tile)
+		
 		sprite.global_position = tile_map.map_to_local(target_tile)
+		
 		animation.play("Attack")
 		blood_particle.emitting = true 
 		await get_tree().create_timer(0.5).timeout
+		
 		sprite.global_position = tile_map.map_to_local(current_tile)
 		
 		attacking = false
+		
 		if health > 0: global_position = tile_map.map_to_local(target_tile)
 		return
 	
