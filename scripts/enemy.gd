@@ -22,7 +22,6 @@ func get_damage(player_state, player_health, player_tier):
 		
 		animation.play("death")
 		await animation.animation_finished
-		
 		queue_free()
 		
 		

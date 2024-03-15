@@ -5,6 +5,7 @@ extends Sprite2D
 var is_moving = false
 var tier = 0
 var attacking = false
+var killed = false
 
 var current_state
 enum State {
@@ -113,7 +114,9 @@ func move(direction: Vector2):
 		sprite.global_position = tile_map.map_to_local(current_tile)
 		
 		attacking = false
-		if health > 0: global_position = tile_map.map_to_local(target_tile)
+		if health > 0 || killed: 
+			global_position = tile_map.map_to_local(target_tile)
+			killed = false
 		return
 	
 	# Move Player:
@@ -138,6 +141,7 @@ func _on_area_2d_body_entered(body):
 			GLOBAL.enemies_left -= 1
 			
 			body.get_damage(current_state, health, tier)
+			if body.health <= 0: killed = true
 			get_damage_from_enemy({"health": enemy_health, "tier": enemy_tier})
 		
 		tier_check()
