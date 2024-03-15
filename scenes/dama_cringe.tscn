@@ -1,11 +1,48 @@
-[gd_scene load_steps=5 format=3 uid="uid://blx1ox7mnt3n5"]
+[gd_scene load_steps=6 format=3 uid="uid://blx1ox7mnt3n5"]
 
 [ext_resource type="Script" path="res://scripts/dama_cringe.gd" id="1_ctmym"]
 [ext_resource type="Texture2D" uid="uid://bs0cq12ffcvpm" path="res://assets/tiles/tilemap_packed.png" id="2_q5qr7"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_iron0"]
-atlas = ExtResource("2_q5qr7")
-region = Rect2(48, 128, 16, 16)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d116y"]
+texture = ExtResource("2_q5qr7")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+0:5/0 = 0
+2:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+2:8/0 = 0
+3:8/0 = 0
+4:8/0 = 0
+0:9/0 = 0
+1:9/0 = 0
+2:9/0 = 0
+3:9/0 = 0
+4:9/0 = 0
+3:10/0 = 0
+4:10/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_13kgw"]
+sources/0 = SubResource("TileSetAtlasSource_d116y")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vx3if"]
 size = Vector2(112, 112)
@@ -13,10 +50,26 @@ size = Vector2(112, 112)
 [node name="DamaCringe" type="Node2D"]
 script = ExtResource("1_ctmym")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("AtlasTexture_iron0")
+[node name="Sprite2D" type="TileMap" parent="."]
+position = Vector2(-8, -8)
+tile_set = SubResource("TileSet_13kgw")
+format = 2
+layer_0/tile_data = PackedInt32Array(-1, 131072, 7, 65535, 131072, 8, -65536, 196608, 7, 0, 196608, 8, -65535, 262144, 7, 1, 262144, 8)
 
 [node name="Area2D" type="Area2D" parent="."]
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_vx3if")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://ckyq2d54v1ani"]
+[gd_scene load_steps=13 format=3 uid="uid://ckyq2d54v1ani"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_bqjyo"]
 [ext_resource type="Texture2D" uid="uid://bs0cq12ffcvpm" path="res://assets/tiles/tilemap_packed.png" id="2_p65fi"]
 [ext_resource type="AudioStream" uid="uid://bmn6irncjou0h" path="res://assets/sfx/knife_sfx.ogg" id="3_bsv42"]
 [ext_resource type="AudioStream" uid="uid://udtse3bjjg3s" path="res://assets/sfx/pass.wav" id="4_8x757"]
+[ext_resource type="PackedScene" uid="uid://dq42ccgvkriqj" path="res://scenes/blood_particle.tscn" id="5_lxlwc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xglp0"]
 atlas = ExtResource("2_p65fi")
@@ -18,7 +19,7 @@ atlas = ExtResource("2_p65fi")
 region = Rect2(32, 80, 16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jt6g3"]
-size = Vector2(16, 16)
+size = Vector2(12, 12)
 
 [sub_resource type="Animation" id="Animation_vylq6"]
 resource_name = "Attack"
@@ -150,6 +151,8 @@ offset_right = 24.0
 offset_bottom = -9.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 14
 text = "Health"
 horizontal_alignment = 1
@@ -157,6 +160,11 @@ horizontal_alignment = 1
 [node name="AttackSprite" type="Sprite2D" parent="Sprite2D"]
 visible = false
 texture = SubResource("AtlasTexture_f3kj3")
+
+[node name="BloodParticle" parent="Sprite2D" instance=ExtResource("5_lxlwc")]
+emitting = false
+lifetime = 0.1
+one_shot = true
 
 [node name="Hitbox" type="Area2D" parent="Sprite2D"]
 monitoring = false
