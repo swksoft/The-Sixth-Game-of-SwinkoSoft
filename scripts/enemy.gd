@@ -1,11 +1,15 @@
 extends CharacterBody2D
 
 @export_range(1,9) var health = 1
+@export_range(0,3) var enemy_class = 1
+@export_range(0,3) var hp_enemy = 1
+
 
 var tier: int
 var death01_sfx = preload("res://assets/sfx/Impact - punch03.wav")
 var death02_sfx = preload("res://assets/sfx/Impact - punch05.wav")
 var death03_sfx = preload("res://assets/sfx/Impact - Punch09 - Splat.wav")
+
 
 @onready var health_label = $Sprite/HealthLabel
 @onready var sprite = $Sprite
@@ -28,7 +32,7 @@ func get_damage(player_state, player_health, player_tier):
 	elif player_state == 1:
 		#visible = false
 		
-		get_damage_from_enemy({"health": player_health, "tier": player_tier})
+		#get_damage_from_enemy({"health": player_health, "tier": player_tier})
 		GLOBAL.enemies_left -= 1
 		
 		#await get_tree().create_timer(0.4).timeout
@@ -67,8 +71,46 @@ func _ready():
 	
 	#get_damage_from_enemy({"health": 2, "tier": 1})
 
-func get_damage_from_enemy(enemy):
-	var health_difference = health - enemy.health
+func get_damage_from_enemy(player_class, hp_player):
+	var combat_results = GLOBAL.calcularResultado(player_class, hp_player, enemy_class, hp_enemy)
+	
+	var new_enemy_class = combat_results["enemy"][0]
+	var new_hp_enemy = combat_results["enemy"][1]
+	
+	var new_player_class = combat_results["player"][0]
+	var new_hp_player = combat_results["player"][1]
+	
+	enemy_class = new_enemy_class
+	hp_enemy = new_hp_enemy
+	
+	print_debug("NUEVA CLASE: ", new_enemy_class)
+	print_debug("NUEVA SALUD: ", new_hp_enemy)
+	
+	#tier_check()
+	#check_death()
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	#var health_difference = health - enemy.health
 	#print_debug(health_difference)
 	
 	''' SI DOS ENEMIGOS IGUALES SE ENFRENTAN '''
@@ -85,8 +127,7 @@ func get_damage_from_enemy(enemy):
 	#elif health_difference <= 2: health -= 1
 	#elif health_difference <= 2: health += 1
 	#elif health_difference >= 2 and health_difference <= 5: health += 1
-	tier_check()
-	check_death()
+	
 
 '''func tier_calculate():
 	var health_divided_by_three = health/3

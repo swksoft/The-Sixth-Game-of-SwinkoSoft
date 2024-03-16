@@ -1,11 +1,15 @@
 extends Sprite2D
 
 @export_range(0,9) var health = 0
+@export_range(0,3) var hp_player = 0
+@export_range(0,3) var player_class = 0
 
 var is_moving = false
 var tier = 0
 var attacking = false
 var killed = false
+
+
 
 var current_state
 enum State {
@@ -132,12 +136,32 @@ func move(direction: Vector2):
 	
 	step_sfx.play()
 
-func _on_area_2d_body_entered(body):
-	if body.has_method("get_damage"):
+func _on_area_2d_body_entered(enemy):
+	enemy.get_damage_from_enemy(player_class, hp_player)
+	
+	var combat_results = GLOBAL.calcularResultado(player_class, hp_player, enemy.enemy_class, enemy.hp_enemy)
+	
+	var new_enemy_class = combat_results["enemy"][0]
+	var new_hp_enemy = combat_results["enemy"][1]
+	
+	var new_player_class = combat_results["player"][0]
+	var new_hp_player = combat_results["player"][1]
+	
+	
+	player_class = new_player_class
+	hp_player = new_hp_player
+	
+	
+	print_debug("NUEVA CLASE PLAYER: ", new_player_class)
+	print_debug("NUEVA SALUD PLAYER: ", new_hp_player)
+	
+	'''
+	if body.has_method("get_damage_from_enemy"):
 		if current_state == 0:
 			if GLOBAL.trans: GLOBAL.trans_left -= 1
 			health += body.health
 			body.get_damage(current_state, health, tier)
+			
 		else:
 			var enemy_health = body.health
 			var enemy_tier = body.tier
@@ -152,10 +176,21 @@ func _on_area_2d_body_entered(body):
 		check_death()
 		
 		attack_sfx.playing = true
-
+	'''
 func get_damage_from_enemy(enemy):
-	var health_difference = health - enemy.health
-	print_debug("DIFERENCIA: ", health_difference)
+	#var health_difference = health - enemy.health
+	#print_debug("DIFERENCIA: ", health_difference)
+	
+	var combat_results = GLOBAL.calcularResultado(player_class, hp_player, enemy.enemy_class, enemy.hp_enemy)
+	
+	var new_enemy_class = combat_results["enemy"][0]
+	var new_hp_enemy = combat_results["enemy"][1]
+	
+	var new_player_class = combat_results["player"][0]
+	var new_hp_player = combat_results["player"][1]
+	
+	#tier_check()
+	#check_death()
 	
 	#if health_difference <= 0: health -= enemy.health
 	#'''
@@ -166,7 +201,7 @@ func get_damage_from_enemy(enemy):
 	#elif health_difference >= 2 and health_difference <= 4: health += 1
 	
 	# >< 															><
-	
+	'''
 	if health_difference == 0: health -= enemy.health
 	else:
 		
@@ -191,7 +226,6 @@ func get_damage_from_enemy(enemy):
 					health = -2
 				#elif health_difference == -1:
 				
-				'''
 				if health_difference == 1:
 					print("A")
 				elif health_difference == 2:
@@ -208,8 +242,8 @@ func get_damage_from_enemy(enemy):
 				# Health 0 :
 				# NADA
 				# Health -1 :
-				'''
-				'''if health_difference == -1 and health == 1:
+				
+				if health_difference == -1 and health == 1:
 					health -= 1
 					# Enemigo pierde -2
 					print("Caso B")
@@ -221,7 +255,7 @@ func get_damage_from_enemy(enemy):
 				# Health +1 :
 				elif health_difference >= -2:
 					health += 1
-					print("Caso E")'''
+					print("Caso E")
 			2:
 				# Health +1 :
 				if health_difference >= 2 and health_difference <= 4 and health < 6: health += 1
@@ -230,7 +264,7 @@ func get_damage_from_enemy(enemy):
 				# Health +1 :
 				if health_difference >= 2 and health_difference <= 2 and health < 8: health += 1
 				elif health_difference >= 2 and health_difference <= 2 and health == 8: health += 1
-	
+				'''
 	# BOSQUEJO:
 	# TIER 1, 2 y 3: if health_difference <= 0: health -= enemy.health
 	# TIER 1:
@@ -240,8 +274,7 @@ func get_damage_from_enemy(enemy):
 	# TIER 3:
 		# if tier == 2 and health_difference >= 2 and health_difference <= 3: health += 1
 	
-	tier_check()
-	check_death()
+	
 
 func check_death():
 	''' Personaje pierde víctima (salud no puede bajar de 0)'''
