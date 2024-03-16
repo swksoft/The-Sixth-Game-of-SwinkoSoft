@@ -30,7 +30,30 @@ enum State {
 @onready var step_sfx = $StepSFX
 @onready var blood_particle = $Sprite2D/BloodParticle
 
-func tier_check():	
+func tier_check2():
+	var atlas_texture = AtlasTexture.new()
+	atlas_texture.atlas = load("res://assets/tiles/tilemap_packed.png")
+	
+	match player_class:
+		1:
+			atlas_texture.region = Rect2(64, 144, 16, 16)
+		2:
+			atlas_texture.region = Rect2(48, 144, 16, 16)
+		3:
+			atlas_texture.region = Rect2(32, 144, 16, 16)
+		_:
+			print("PLAYER ES FANTASMA\n")
+			
+			atlas_texture.region = Rect2(0, 144, 16, 16)
+	
+	sprite.texture = atlas_texture
+	health_label.text = str(hp_player)
+	if player_class == 1: health_label.add_theme_color_override("font_color", Color("995544"))
+	elif player_class == 2: health_label.add_theme_color_override("font_color", Color("ccbbcc"))
+	elif player_class == 3: health_label.add_theme_color_override("font_color", Color("ffff55"))
+	else: health_label.add_theme_color_override("font_color", Color("ffffff"))
+
+func tier_check():
 	var atlas_texture = AtlasTexture.new()
 	
 	atlas_texture.atlas = load("res://assets/tiles/tilemap_packed.png")
@@ -55,11 +78,13 @@ func tier_check():
 		current_state = State.TRANS #rights
 
 	sprite.texture = atlas_texture
-	health_label.text = str(health)
+	#health_label.text = str(health)
+	health_label.text = str(hp_player)
 
 func _ready():
 	''' Define Health and Tier: '''
-	tier_check()
+	#tier_check()
+	tier_check2()
 
 func _physics_process(_delta):
 	''' Limita movilidad '''
@@ -137,9 +162,12 @@ func move(direction: Vector2):
 	step_sfx.play()
 
 func _on_area_2d_body_entered(enemy):
-	enemy.get_damage_from_enemy(player_class, hp_player)
+	#print("VIDA VIEJA ENEMIGO", enemy.hp_enemy)
+	#print("VIDA VIEJA ENEMIGO", enemy.hp_enemy)
 	
-	var combat_results = GLOBAL.calcularResultado(player_class, hp_player, enemy.enemy_class, enemy.hp_enemy)
+	
+	
+	var combat_results: Dictionary = GLOBAL.calcularResultado(player_class, hp_player, enemy.enemy_class, enemy.hp_enemy)
 	
 	var new_enemy_class = combat_results["enemy"][0]
 	var new_hp_enemy = combat_results["enemy"][1]
@@ -147,13 +175,21 @@ func _on_area_2d_body_entered(enemy):
 	var new_player_class = combat_results["player"][0]
 	var new_hp_player = combat_results["player"][1]
 	
+	#enemy.get_damage_from_enemy(player_class, hp_player)
 	
 	player_class = new_player_class
 	hp_player = new_hp_player
 	
+	enemy.get_damage_from_enemy(new_player_class, new_hp_player, new_enemy_class, new_hp_enemy)
 	
-	print_debug("NUEVA CLASE PLAYER: ", new_player_class)
-	print_debug("NUEVA SALUD PLAYER: ", new_hp_player)
+	tier_check2()
+	
+	#print_debug(new_enemy_class)
+	#print_debug(new_hp_enemy)
+	
+	
+	#print_debug("NUEVA CLASE PLAYER: ", new_player_class)
+	#print_debug("NUEVA SALUD PLAYER: ", new_hp_player)
 	
 	'''
 	if body.has_method("get_damage_from_enemy"):
@@ -189,6 +225,7 @@ func get_damage_from_enemy(enemy):
 	var new_player_class = combat_results["player"][0]
 	var new_hp_player = combat_results["player"][1]
 	
+	tier_check2()
 	#tier_check()
 	#check_death()
 	

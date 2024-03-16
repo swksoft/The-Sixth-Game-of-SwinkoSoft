@@ -16,6 +16,7 @@ var transition = true
 func _ready():
 	''' Cuenta todos los enemigos en pantalla para verificar enemigos en pantalla '''
 	GLOBAL.enemies_left = enemie_group.size()
+	GLOBAL.combat_count = 0
 
 func alert_mode():
 	''' Player no se moverá en Game Over '''

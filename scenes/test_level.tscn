@@ -234,75 +234,36 @@ position = Vector2(8, 40)
 
 [node name="Enemy" parent="Enemies" instance=ExtResource("3_r6jh7")]
 position = Vector2(-24, 88)
-enemy_class = 1
+enemy_class = 3
+hp_enemy = 2
+
+[node name="Enemy7" parent="Enemies" instance=ExtResource("3_r6jh7")]
+position = Vector2(-24, 40)
+enemy_class = 3
+
+[node name="Enemy4" parent="Enemies" instance=ExtResource("3_r6jh7")]
+position = Vector2(-56, 56)
+enemy_class = 3
+hp_enemy = 2
 
 [node name="Enemy2" parent="Enemies" instance=ExtResource("3_r6jh7")]
 position = Vector2(8, 120)
 health = 2
 enemy_class = 2
-hp_enemy = 1
 
 [node name="Enemy3" parent="Enemies" instance=ExtResource("3_r6jh7")]
 position = Vector2(40, 88)
-hp_enemy = 2
-
-[node name="Enemy4" parent="Enemies" instance=ExtResource("3_r6jh7")]
-position = Vector2(56, 120)
-health = 4
+enemy_class = 1
 
 [node name="Enemy5" parent="Enemies" instance=ExtResource("3_r6jh7")]
-position = Vector2(88, 88)
-health = 5
+position = Vector2(88, 56)
+enemy_class = 1
+hp_enemy = 2
 
 [node name="Enemy6" parent="Enemies" instance=ExtResource("3_r6jh7")]
-position = Vector2(104, 120)
-health = 6
-
-[node name="Enemy7" parent="Enemies" instance=ExtResource("3_r6jh7")]
-position = Vector2(136, 88)
-health = 7
-
-[node name="Enemy8" parent="Enemies" instance=ExtResource("3_r6jh7")]
-position = Vector2(168, 120)
-health = 8
-
-[node name="Enemy9" parent="Enemies" instance=ExtResource("3_r6jh7")]
-position = Vector2(200, 88)
-health = 9
-
-[node name="Enemy10" parent="Enemies" instance=ExtResource("3_r6jh7")]
-position = Vector2(-24, 136)
-
-[node name="Enemy11" parent="Enemies" instance=ExtResource("3_r6jh7")]
-position = Vector2(8, 168)
-health = 2
-
-[node name="Enemy12" parent="Enemies" instance=ExtResource("3_r6jh7")]
-position = Vector2(40, 136)
-
-[node name="Enemy13" parent="Enemies" instance=ExtResource("3_r6jh7")]
-position = Vector2(56, 168)
-health = 4
-
-[node name="Enemy14" parent="Enemies" instance=ExtResource("3_r6jh7")]
-position = Vector2(88, 136)
-health = 5
-
-[node name="Enemy15" parent="Enemies" instance=ExtResource("3_r6jh7")]
-position = Vector2(104, 168)
-health = 6
-
-[node name="Enemy16" parent="Enemies" instance=ExtResource("3_r6jh7")]
-position = Vector2(136, 136)
-health = 7
-
-[node name="Enemy17" parent="Enemies" instance=ExtResource("3_r6jh7")]
-position = Vector2(168, 168)
-health = 8
-
-[node name="Enemy18" parent="Enemies" instance=ExtResource("3_r6jh7")]
-position = Vector2(200, 136)
-health = 9
+position = Vector2(88, 88)
+enemy_class = 1
+hp_enemy = 3
 
 [node name="HUD" parent="." instance=ExtResource("4_l5y45")]
 

@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @export_range(1,9) var health = 1
-@export_range(0,3) var enemy_class = 1
+@export_range(0,3) var enemy_class = 0
 @export_range(0,3) var hp_enemy = 1
 
 
@@ -38,6 +38,28 @@ func get_damage(player_state, player_health, player_tier):
 		#await get_tree().create_timer(0.4).timeout
 		#visible = true
 	
+func tier_check2():
+	var atlas_texture = AtlasTexture.new()
+	atlas_texture.atlas = load("res://assets/tiles/tilemap_packed.png")
+	
+	match enemy_class:
+		1:
+			atlas_texture.region = Rect2(48, 160, 16, 16)
+		2:
+			atlas_texture.region = Rect2(64, 160, 16, 16)
+		3:
+			atlas_texture.region = Rect2(16, 144, 16, 16)
+		_:
+			print("ENEMY TERMINATED\n")
+			atlas_texture.region = Rect2(96, 80, 16, 16)
+	
+	sprite.texture = atlas_texture
+	health_label.text = str(hp_enemy)
+	if enemy_class == 1: health_label.add_theme_color_override("font_color", Color("995544"))
+	elif enemy_class == 2: health_label.add_theme_color_override("font_color", Color("ccbbcc"))
+	elif enemy_class == 3: health_label.add_theme_color_override("font_color", Color("ffff55"))
+	else: health_label.add_theme_color_override("font_color", Color("ffffff"))
+	
 func tier_check():
 	var atlas_texture = AtlasTexture.new()
 	atlas_texture.atlas = load("res://assets/tiles/tilemap_packed.png")
@@ -58,11 +80,12 @@ func tier_check():
 		atlas_texture.region = Rect2(16, 144, 16, 16)
 
 	sprite.texture = atlas_texture
-	health_label.text = str(health)
+	#health_label.text = str(health)
+	health_label.text = str(hp_enemy)
 
 func _ready():
 	''' Define Health and Tier, Change sprite: '''
-	tier_check()
+	tier_check2()
 	
 	''' SFX '''
 	if tier == 1: death_sfx.stream = death01_sfx
@@ -71,22 +94,22 @@ func _ready():
 	
 	#get_damage_from_enemy({"health": 2, "tier": 1})
 
-func get_damage_from_enemy(player_class, hp_player):
-	var combat_results = GLOBAL.calcularResultado(player_class, hp_player, enemy_class, hp_enemy)
-	
-	var new_enemy_class = combat_results["enemy"][0]
-	var new_hp_enemy = combat_results["enemy"][1]
-	
-	var new_player_class = combat_results["player"][0]
-	var new_hp_player = combat_results["player"][1]
-	
+func get_damage_from_enemy(player_class, hp_player, new_enemy_class, new_hp_enemy):
+	#var combat_results = GLOBAL.calcularResultado(player_class, hp_player, enemy_class, hp_enemy)
+	#
+	#var new_enemy_class = combat_results["enemy"][0]
+	#var new_hp_enemy = combat_results["enemy"][1]
+	#
+	#var new_player_class = combat_results["player"][0]
+	#var new_hp_player = combat_results["player"][1]
+	#
 	enemy_class = new_enemy_class
 	hp_enemy = new_hp_enemy
 	
-	print_debug("NUEVA CLASE: ", new_enemy_class)
-	print_debug("NUEVA SALUD: ", new_hp_enemy)
-	
-	#tier_check()
+	#print_debug("NUEVA CLASE: ", new_enemy_class)
+	#print_debug("NUEVA SALUD: ", new_hp_enemy)
+	#print("Auch! Me ataron y ahora mi salud es ", new_hp_enemy, " y mi clase es ", new_enemy_class)
+	tier_check2()
 	#check_death()
 	
 	
