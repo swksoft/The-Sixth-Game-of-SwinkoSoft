@@ -131,7 +131,7 @@ func move(direction: Vector2):
 	var is_walkable = tile_data.get_custom_data("walkable")
 	var player_is_converted = player_class != 0
 	var is_transparent = tile_data.get_custom_data("transparent")
-	var is_transparent_and_player_not_converted = player_is_converted && !player_is_converted
+	var is_transparent_and_player_not_converted = is_transparent && !player_is_converted
 	var is_restricted = tile_data.get_custom_data("restricted")
 	var is_restricted_and_player_converted = player_is_converted && is_restricted
 	var is_door_and_same_class = tile_data.get_custom_data("door") == player_class && player_class != 0
