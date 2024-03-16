@@ -97,6 +97,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ccwld")
+hide_data = true
 
 [node name="Animation" type="AnimationPlayer" parent="."]
 root_node = NodePath("../CanvasLayer")
@@ -117,7 +118,6 @@ grow_vertical = 2
 color = Color(0.984314, 0, 0.180392, 1)
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer"]
-anchors_preset = -1
 offset_left = 10.0
 offset_top = 10.0
 offset_right = 88.0
@@ -129,7 +129,6 @@ layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 10
-text = "Time Left: int"
 vertical_alignment = 1
 
 [node name="TransLabel" type="Label" parent="CanvasLayer/VBoxContainer2"]
@@ -138,7 +137,6 @@ layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 10
-text = "Transformations: int"
 vertical_alignment = 1
 
 [node name="EnemyLabel" type="Label" parent="CanvasLayer/VBoxContainer2"]
@@ -147,7 +145,6 @@ layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 10
-text = "Enemies Left: int"
 vertical_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]

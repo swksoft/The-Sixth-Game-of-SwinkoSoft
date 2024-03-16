@@ -1,0 +1,78 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgquitwkigvoc"]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_p5uep"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p5uep")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="BGColor" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="UpperText" type="BoxContainer" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UpperText"]
+layout_mode = 2
+
+[node name="Company" type="Label" parent="CanvasLayer/UpperText/VBoxContainer"]
+layout_mode = 2
+text = "SWKsoft presents..."
+
+[node name="Title" type="Label" parent="CanvasLayer/UpperText/VBoxContainer"]
+layout_mode = 2
+text = "The ParaPara Massacre"
+
+[node name="Options" type="BoxContainer" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxButtons" type="VBoxContainer" parent="CanvasLayer/Options"]
+layout_mode = 2
+
+[node name="StartButton" type="Button" parent="CanvasLayer/Options/VBoxButtons"]
+layout_mode = 2
+text = "Start"
+flat = true
+
+[node name="ExitButton" type="Button" parent="CanvasLayer/Options/VBoxButtons"]
+layout_mode = 2
+text = "Exit"
+flat = true
+
+[node name="Version" type="Label" parent="CanvasLayer"]
+offset_left = 235.0
+offset_top = 152.0
+offset_right = 320.0
+offset_bottom = 168.0
+text = "Ver. 11.12.2000"
+
+[connection signal="pressed" from="CanvasLayer/Options/VBoxButtons/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Options/VBoxButtons/ExitButton" to="." method="_on_exit_button_pressed"]

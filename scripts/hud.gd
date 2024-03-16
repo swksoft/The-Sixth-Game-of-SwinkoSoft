@@ -2,6 +2,8 @@ extends Control
 
 signal game_over
 
+@export var hide_data: bool = false
+
 var alarm = true
 var transition = true
 
@@ -41,6 +43,8 @@ func win():
 		TransitionLayer.change_scene("res://scenes/test_level.tscn")
 
 func _process(_delta):
+	if hide_data:
+		return
 	''' Gestor de HUD: '''
 	%TimeLabel.text = "Time Left: " + str(GLOBAL.time_left)
 	%EnemyLabel.text = "Enemies: " + str(GLOBAL.enemies_left)

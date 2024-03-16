@@ -26,7 +26,7 @@ enum State {
 @onready var step_sfx = $StepSFX
 @onready var blood_particle = $Sprite2D/BloodParticle
 
-func tier_check():
+func tier_check():	
 	var atlas_texture = AtlasTexture.new()
 	
 	atlas_texture.atlas = load("res://assets/tiles/tilemap_packed.png")
@@ -93,7 +93,7 @@ func move(direction: Vector2):
 		current_tile.x + direction.x,
 		current_tile.y + direction.y
 	)
-	prints(current_tile, target_tile)
+	#prints(current_tile, target_tile)
 	''' Get data from target tile: '''
 	var tile_data: TileData = tile_map.get_cell_tile_data(0, target_tile)
 	
@@ -128,14 +128,14 @@ func move(direction: Vector2):
 	global_position = tile_map.map_to_local(target_tile)
 	sprite.global_position = tile_map.map_to_local(current_tile)
 	
-	GLOBAL.time_left -= 1
+	if GLOBAL.time: GLOBAL.time_left -= 1
 	
 	step_sfx.play()
 
 func _on_area_2d_body_entered(body):
 	if body.has_method("get_damage"):
 		if current_state == 0:
-			GLOBAL.trans_left -= 1
+			if GLOBAL.trans: GLOBAL.trans_left -= 1
 			health += body.health
 			body.get_damage(current_state, health, tier)
 		else:
@@ -155,11 +155,90 @@ func _on_area_2d_body_entered(body):
 
 func get_damage_from_enemy(enemy):
 	var health_difference = health - enemy.health
+	print_debug("DIFERENCIA: ", health_difference)
 	
-	if health_difference <= 0: health -= enemy.health
-	elif health_difference == 1 && enemy.tier == tier: health -= 2
-	elif health_difference <= 2: health -= 1
-	elif health_difference <= 5: health += 1
+	#if health_difference <= 0: health -= enemy.health
+	#'''
+	#elif health_difference == 1 && enemy.tier == 1: health -= 1
+	#elif health_difference == 1 && enemy.tier > tier: health -= 2
+	#if health_difference <= 2: health -= 1
+	#'''
+	#elif health_difference >= 2 and health_difference <= 4: health += 1
+	
+	# >< 															><
+	
+	if health_difference == 0: health -= enemy.health
+	else:
+		
+		match tier:
+			1:
+				# Pierde
+				if health_difference <= -1 and health == 1:
+					if health_difference <= -2 and health_difference >= -5: enemy.health + 1
+					health += -1
+					
+				# Gana
+				elif health_difference >= 1 and health == 2:
+					health += -1
+				# Pierde
+				elif health_difference <= -1 and health == 2:
+					if enemy.health == 3:
+						print("Enemigo pierde 2 de vida")
+						enemy.health += -2
+					if health_difference <= -2:
+						print("recupera vida")
+						enemy.health + 1
+					health = -2
+				#elif health_difference == -1:
+				
+				'''
+				if health_difference == 1:
+					print("A")
+				elif health_difference == 2:
+					print("B")
+				elif health_difference == -1:
+					print("C")
+				elif health_difference == -2:
+					print("D")
+				elif health_difference <= -2:
+					if health_difference >= -5:
+						print("E")
+						pass
+					print("D")
+				# Health 0 :
+				# NADA
+				# Health -1 :
+				'''
+				'''if health_difference == -1 and health == 1:
+					health -= 1
+					# Enemigo pierde -2
+					print("Caso B")
+				# Health -2 :
+				elif health_difference == -1 and health == 2:
+					health -= 2
+					# Enemigo pierde -2
+					print("Caso C")
+				# Health +1 :
+				elif health_difference >= -2:
+					health += 1
+					print("Caso E")'''
+			2:
+				# Health +1 :
+				if health_difference >= 2 and health_difference <= 4 and health < 6: health += 1
+				elif health_difference >= 2 and health_difference <= 2 and health == 6: health += 1
+			3:
+				# Health +1 :
+				if health_difference >= 2 and health_difference <= 2 and health < 8: health += 1
+				elif health_difference >= 2 and health_difference <= 2 and health == 8: health += 1
+	
+	# BOSQUEJO:
+	# TIER 1, 2 y 3: if health_difference <= 0: health -= enemy.health
+	# TIER 1:
+		# if tier == 1 and health_difference >= 2: health += 1
+	# TIER 2:
+		# if tier == 2 and TIER 2: health_difference >= 2 and health_difference <= 5: health += 1
+	# TIER 3:
+		# if tier == 2 and health_difference >= 2 and health_difference <= 3: health += 1
 	
 	tier_check()
 	check_death()

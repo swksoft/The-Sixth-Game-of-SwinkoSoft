@@ -27,10 +27,12 @@ func get_damage(player_state, player_health, player_tier):
 		
 	elif player_state == 1:
 		#visible = false
-		#await get_tree().create_timer(0.3).timeout
 		
 		get_damage_from_enemy({"health": player_health, "tier": player_tier})
 		GLOBAL.enemies_left -= 1
+		
+		#await get_tree().create_timer(0.4).timeout
+		#visible = true
 	
 func tier_check():
 	var atlas_texture = AtlasTexture.new()
@@ -66,23 +68,32 @@ func _ready():
 	#get_damage_from_enemy({"health": 2, "tier": 1})
 
 func get_damage_from_enemy(enemy):
-	
 	var health_difference = health - enemy.health
+	#print_debug(health_difference)
 	
-	if health_difference <= 0: health -= enemy.health
-	elif health_difference == 1 && enemy.tier == tier: health -= 2
-	elif health_difference <= 2: health -= 1
-	elif health_difference <= 5: health += 1
+	''' SI DOS ENEMIGOS IGUALES SE ENFRENTAN '''
+	#if health_difference <= 0: health -= enemy.health
 	
+	#elif health_difference == 1 && tier == enemy.tier and enemy.health != 1 and enemy.health != 4 and enemy.health != 7: health -= 2
+	#elif health_difference == 1 && tier == enemy.tier: health -= 1
+	#'''
+	##elif health_difference == 1 && tier == 1 and enemy.tier == 1: health -= 0
+	#elif health_difference == 2 && tier == enemy.tier: health += 1
+	#elif tier <= 2: health -= 0
+	#elif health_difference == 1 && enemy.tier == tier: health -= 2
+	#'''
+	#elif health_difference <= 2: health -= 1
+	#elif health_difference <= 2: health += 1
+	#elif health_difference >= 2 and health_difference <= 5: health += 1
 	tier_check()
 	check_death()
 
-func tier_calculate():
+'''func tier_calculate():
 	var health_divided_by_three = health/3
 	
 	if health_divided_by_three <= 1: tier = 1
 	elif health_divided_by_three <= 2: tier = 2
-	else: tier = 3
+	else: tier = 3'''
 	
 func check_death():
 	if health <= 0:
@@ -121,7 +132,7 @@ func alert_mode():
 
 func _process(_delta):
 	''' Chequea modo alerta (Game Over)'''
-	if GLOBAL.time_left <= 0:
+	if GLOBAL.time_left <= 0 and GLOBAL.time:
 		await alert_mode()
 
 #func _on_collision(area):

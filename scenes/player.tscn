@@ -1,14 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://ckyq2d54v1ani"]
+[gd_scene load_steps=12 format=3 uid="uid://ckyq2d54v1ani"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_bqjyo"]
 [ext_resource type="Texture2D" uid="uid://bs0cq12ffcvpm" path="res://assets/tiles/tilemap_packed.png" id="2_p65fi"]
 [ext_resource type="AudioStream" uid="uid://bmn6irncjou0h" path="res://assets/sfx/knife_sfx.ogg" id="3_bsv42"]
 [ext_resource type="AudioStream" uid="uid://udtse3bjjg3s" path="res://assets/sfx/pass.wav" id="4_8x757"]
 [ext_resource type="PackedScene" uid="uid://dq42ccgvkriqj" path="res://scenes/blood_particle.tscn" id="5_lxlwc"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xglp0"]
-atlas = ExtResource("2_p65fi")
-region = Rect2(0, 80, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xy1q8"]
 atlas = ExtResource("2_p65fi")
@@ -132,7 +128,6 @@ _data = {
 }
 
 [node name="Player" type="Sprite2D"]
-texture = SubResource("AtlasTexture_xglp0")
 script = ExtResource("1_bqjyo")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
