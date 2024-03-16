@@ -28,7 +28,7 @@ layer_2/name = "objects"
 layer_2/tile_data = PackedInt32Array(983057, 196608, 2)
 
 [node name="Player" parent="." instance=ExtResource("1_lxrc1")]
-position = Vector2(-120, 88)
+position = Vector2(-8, 70)
 
 [node name="Enemies" type="Node" parent="."]
 
