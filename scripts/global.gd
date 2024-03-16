@@ -15,6 +15,7 @@ func calcularResultado(player_class: int, hp_player: int, enemy_class: int , hp_
 	print("STATS ENEMIGO ANTES: [", enemy_class, ", ", hp_enemy, "]\n")
 	
 	# Por si las dudas
+	#var death: bool = false
 	var old_player_class = player_class
 	var old_enemy_class = enemy_class
 	var old_hp_player = hp_player
@@ -68,13 +69,13 @@ func calcularResultado(player_class: int, hp_player: int, enemy_class: int , hp_
 				match player_class:
 					2: # CIUDADANO
 						hp_player += hp_enemy
-						hp_enemy -= old_hp_player
+						hp_enemy = 0
+						enemy_class = 0
 						print("(CASO 1a: Esclavo pierde contra Ciudadano)")
 					3: # EMPERADOR
 						hp_enemy += hp_player
-						hp_player -= old_hp_enemy
-						hp_enemy = 0
-						enemy_class = 0
+						hp_player = 0
+						player_class = 0
 						print("(CASO 1b: Esclavo gana contra Emperador)")
 					_:
 						pass
@@ -82,11 +83,13 @@ func calcularResultado(player_class: int, hp_player: int, enemy_class: int , hp_
 				match player_class:
 					3: # EMPERADOR
 						hp_player += hp_enemy
-						hp_enemy -= old_hp_player
+						hp_enemy = 0
+						enemy_class = 0
 						print("CASO 2a: Ciudadano pierde contra Emperador")
 					1: # ESCLAVO
 						hp_enemy += hp_player
-						hp_player -= old_hp_enemy
+						hp_player = 0
+						player_class = 0
 						print("CASO 2b: Ciudadano gana contra Esclavo")
 					_:
 						pass
@@ -94,12 +97,13 @@ func calcularResultado(player_class: int, hp_player: int, enemy_class: int , hp_
 				match player_class:
 					1: # ESCLAVO
 						hp_player += hp_enemy
-						hp_enemy -= old_hp_player
+						hp_enemy = 0
+						enemy_class = 0
 						print("CASO 3a: Emperador pierde contra Esclavo")
 					2: # CIUDADANO
-						
 						hp_enemy += hp_player
-						hp_player -= old_hp_enemy
+						hp_player = 0
+						player_class = 0
 						print("CASO 3b: Emperador gana contra Ciudadano")
 					_:
 						pass
@@ -120,13 +124,23 @@ func calcularResultado(player_class: int, hp_player: int, enemy_class: int , hp_
 	
 	''' Level Up '''
 	if hp_enemy > 3:
-		enemy_class += 1
-		hp_enemy = 1
-		print("\n === Level up Enemy \n ")
+		if enemy_class != 3:
+			enemy_class += 1
+			hp_enemy = 1
+			print("\n === Level up Enemy \n ")
+		else:
+			enemy_class = 0
+			hp_enemy = 0
+			print("\n === Can't Level up Enemy\n ")
 	if hp_player > 3:
-		player_class += 1
-		hp_player = 1
-		print("\n === Level up Player\n ")
+		if enemy_class != 3:
+			player_class += 1
+			hp_player = 1
+			print("\n === Level up Player\n ")
+		else:
+			player_class = 0
+			hp_player = 0
+			print("\n === Can't Level up Player\n ")
 
 	#print(player_class)
 	#print(hp_player)

@@ -94,7 +94,7 @@ func _ready():
 	
 	#get_damage_from_enemy({"health": 2, "tier": 1})
 
-func get_damage_from_enemy(player_class, hp_player, new_enemy_class, new_hp_enemy):
+func get_damage_from_enemy(player_class, hp_player, new_enemy_class, new_hp_enemy, death):
 	#var combat_results = GLOBAL.calcularResultado(player_class, hp_player, enemy_class, hp_enemy)
 	#
 	#var new_enemy_class = combat_results["enemy"][0]
@@ -103,9 +103,12 @@ func get_damage_from_enemy(player_class, hp_player, new_enemy_class, new_hp_enem
 	#var new_player_class = combat_results["player"][0]
 	#var new_hp_player = combat_results["player"][1]
 	#
-	enemy_class = new_enemy_class
-	hp_enemy = new_hp_enemy
-	
+	if !death:
+		enemy_class = new_enemy_class
+		hp_enemy = new_hp_enemy
+	else:
+		print("Muerto")
+		queue_free()
 	#print_debug("NUEVA CLASE: ", new_enemy_class)
 	#print_debug("NUEVA SALUD: ", new_hp_enemy)
 	#print("Auch! Me ataron y ahora mi salud es ", new_hp_enemy, " y mi clase es ", new_enemy_class)

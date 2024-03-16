@@ -162,12 +162,9 @@ func move(direction: Vector2):
 	step_sfx.play()
 
 func _on_area_2d_body_entered(enemy):
-	#print("VIDA VIEJA ENEMIGO", enemy.hp_enemy)
-	#print("VIDA VIEJA ENEMIGO", enemy.hp_enemy)
-	
-	
-	
 	var combat_results: Dictionary = GLOBAL.calcularResultado(player_class, hp_player, enemy.enemy_class, enemy.hp_enemy)
+	
+	var death: bool = false
 	
 	var new_enemy_class = combat_results["enemy"][0]
 	var new_hp_enemy = combat_results["enemy"][1]
@@ -180,16 +177,15 @@ func _on_area_2d_body_entered(enemy):
 	player_class = new_player_class
 	hp_player = new_hp_player
 	
-	enemy.get_damage_from_enemy(new_player_class, new_hp_player, new_enemy_class, new_hp_enemy)
+	if new_hp_enemy <= 0 or new_enemy_class <= 0:
+		death = true
+	
+	enemy.get_damage_from_enemy(new_player_class, new_hp_player, new_enemy_class, new_hp_enemy, death)
 	
 	tier_check2()
 	
 	#print_debug(new_enemy_class)
 	#print_debug(new_hp_enemy)
-	
-	
-	#print_debug("NUEVA CLASE PLAYER: ", new_player_class)
-	#print_debug("NUEVA SALUD PLAYER: ", new_hp_player)
 	
 	'''
 	if body.has_method("get_damage_from_enemy"):
