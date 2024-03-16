@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bll7wcxkg4xfa"]
+
+[ext_resource type="PackedScene" uid="uid://525i1bgcww8b" path="res://scenes/test_level.tscn" id="1_act0o"]
+
+[node name="Map06" instance=ExtResource("1_act0o")]
+
+[node name="HUD" parent="." index="4"]
+hide_data = false

@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://ccx1cixgm80uj"]
+
+[ext_resource type="PackedScene" uid="uid://525i1bgcww8b" path="res://scenes/test_level.tscn" id="1_wl2oh"]
+[ext_resource type="PackedScene" uid="uid://cevpwgb6r7oag" path="res://scenes/enemy.tscn" id="2_m85gf"]
+
+[node name="Map04" instance=ExtResource("1_wl2oh")]
+
+[node name="Camera2D" parent="." index="0"]
+position = Vector2(88, 104)
+offset = Vector2(0, 0)
+anchor_mode = 1
+ignore_rotation = false
+
+[node name="TileMap" parent="." index="1"]
+layer_0/tile_data = PackedInt32Array(458747, 0, 4, 458748, 0, 4, 458749, 0, 4, 458750, 0, 4, 458751, 0, 4, 393216, 0, 4, 393217, 0, 4, 393218, 0, 4, 393219, 0, 4, 393220, 0, 4, 393221, 0, 4, 393222, 0, 4, 393223, 0, 4, 393224, 0, 4, 393225, 0, 4, 393226, 0, 4, 393227, 0, 4, 393228, 0, 4, 393229, 0, 4, 393230, 0, 4, 393231, 0, 4, 524283, 0, 0, 524284, 0, 0, 524285, 0, 0, 524286, 0, 0, 524287, 0, 0, 458752, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 458757, 0, 0, 458758, 0, 0, 458759, 0, 0, 458760, 0, 0, 458761, 0, 4, 458762, 0, 4, 458763, 0, 4, 458764, 0, 4, 458765, 0, 4, 458766, 0, 4, 458767, 0, 4, 393211, 0, 0, 393212, 0, 0, 393213, 0, 0, 393214, 0, 0, 393215, 0, 0, 327680, 0, 0, 327681, 0, 0, 327682, 0, 0, 327683, 0, 0, 327684, 0, 0, 327685, 0, 0, 327686, 0, 0, 327687, 0, 0, 327688, 0, 0, 327689, 0, 4, 327690, 0, 4, 327691, 0, 4, 327692, 0, 4, 327693, 0, 4, 327694, 0, 4, 327695, 0, 4, 262154, 0, 4, 262155, 0, 4, 262156, 0, 4, 262157, 0, 4, 262158, 0, 4, 262159, 0, 4, 196619, 0, 4, 196620, 0, 4, 196621, 0, 4, 196622, 0, 4, 196623, 0, 4, 524299, 0, 4, 524300, 0, 4, 524301, 0, 4, 524302, 0, 4, 524303, 0, 4, 589836, 0, 4, 589837, 0, 4, 589838, 0, 4, 589839, 0, 4, 131084, 0, 4, 131085, 0, 4, 131086, 0, 4, 131087, 0, 4, 655373, 0, 4, 655374, 0, 4, 655375, 0, 4, 655376, 0, 4, 720910, 0, 4, 720911, 0, 4, 786447, 0, 4, 65549, 0, 4, 65550, 0, 4, 65551, 0, 4, 14, 0, 4, 15, 0, 4)
+
+[node name="Player" parent="." index="2"]
+position = Vector2(-24, 104)
+
+[node name="Enemy" parent="Enemies" index="0" instance=ExtResource("2_m85gf")]
+position = Vector2(72, 104)
+enemy_class = 2
+
+[node name="Enemy2" parent="Enemies" index="1" instance=ExtResource("2_m85gf")]
+position = Vector2(88, 104)
+enemy_class = 1
+
+[node name="Enemy3" parent="Enemies" index="2" instance=ExtResource("2_m85gf")]
+position = Vector2(104, 104)
+enemy_class = 1
+
+[node name="Enemy4" parent="Enemies" index="3" instance=ExtResource("2_m85gf")]
+position = Vector2(120, 104)
+enemy_class = 1
+
+[node name="HUD" parent="." index="4"]
+hide_data = false

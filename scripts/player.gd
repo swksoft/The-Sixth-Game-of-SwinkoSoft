@@ -96,7 +96,7 @@ func _physics_process(_delta):
 		return
 	
 	''' Sprite sigue a sprite (animación movimiento) '''
-	sprite.global_position = sprite.global_position.move_toward(global_position, 1)
+	sprite.global_position = sprite.global_position.move_toward(global_position, 1.5)
 
 func _process(_delta):
 	''' Estado ITS_OVER para Game Over '''
@@ -126,8 +126,13 @@ func move(direction: Vector2):
 	''' Get data from target tile: '''
 	var tile_data: TileData = tile_map.get_cell_tile_data(0, target_tile)
 	
-	if tile_data.get_custom_data("walkable") == false:
+	if !tile_data.get_custom_data("walkable") and !tile_data.get_custom_data("transparent"):# or (!tile_data.get_custom_data("transparent") and player_class != 0):
+		#print("CAMINABLE: ", !tile_data.get_custom_data("walkable"))
+		#print("TRANSPARENTE: ", (!tile_data.get_custom_data("transparent") and player_class != 0))
+		#pass
 		return
+	#if (!tile_data.get_custom_data("transparent") and player_class != 0):
+	#	return
 	
 	raycast.target_position = direction * 16
 	raycast.force_raycast_update()

@@ -2,7 +2,9 @@ extends CanvasLayer
 
 ''' Seleccción de diálogos '''
 var dialogue := [
-	"\"My objective? Kill Anima, I guess.\""
+	"\"Well, I'm here. What did I have to do?\"",
+	"\"Oh, yeah. Kill Anima.\"",
+	"\"You should have invested in security against ghosts.\""
 ]
 
 @onready var animation = $Animation

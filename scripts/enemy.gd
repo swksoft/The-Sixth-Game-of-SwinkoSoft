@@ -174,7 +174,7 @@ func move(direction):
 		current_tile.x + direction.x,
 		current_tile.y + direction.y
 	)
-	''' Get data from target tile: '''
+	''' Get data from target ttile: '''
 	var tile_data: TileData = tile_map.get_cell_tile_data(0, target_tile)
 	
 	if tile_data.get_custom_data("walkable") == false:
