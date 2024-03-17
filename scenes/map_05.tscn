@@ -6,9 +6,10 @@
 [node name="Map05" instance=ExtResource("1_y60f4")]
 time_flag = true
 limit_flag = true
-time = 32
+time = 40
 trans = 1
 next_map = "06"
+dialog = 4
 
 [node name="Camera2D" parent="." index="0"]
 offset = Vector2(0, 0)
@@ -26,12 +27,12 @@ hp_player = 1
 player_class = 3
 
 [node name="Enemy" parent="Enemies" index="0" instance=ExtResource("2_0jbu0")]
-position = Vector2(-232, -24)
+position = Vector2(-200, -8)
 health = 2
 enemy_class = 2
 
 [node name="Enemy2" parent="Enemies" index="1" instance=ExtResource("2_0jbu0")]
-position = Vector2(-232, 40)
+position = Vector2(-200, 24)
 enemy_class = 1
 
 [node name="Enemy3" parent="Enemies" index="2" instance=ExtResource("2_0jbu0")]

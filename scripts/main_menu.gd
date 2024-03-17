@@ -25,7 +25,7 @@ func _on_exit_button_pressed():
 	get_tree().quit()
 
 func _on_start_button_pressed():
-	TransitionLayer.change_scene("res://scenes/map_01.tscn")
+	TransitionLayer.change_scene("res://scenes/map_01.tscn", false)
 
 func _on_button_pressed():
-	TransitionLayer.change_scene("res://scenes/map_04.tscn")
+	TransitionLayer.change_scene("res://scenes/map_04.tscn", false)

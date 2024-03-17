@@ -144,7 +144,6 @@ func move(direction: Vector2):
 	var is_restricted_and_player_converted = player_is_converted && is_restricted
 	var is_door_and_same_class = tile_data.get_custom_data("door") == player_class && player_class != 0
 
-	
 	var can_pass = is_walkable || is_transparent_and_player_not_converted || is_door_and_same_class || is_restricted_and_player_converted
 	if !can_pass: return
 	#if (!tile_data.get_custom_data("transparent") and player_class != 0):

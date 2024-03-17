@@ -2,26 +2,33 @@ extends CanvasLayer
 
 ''' Seleccción de diálogos '''
 var dialogue := [
-	"\"Well, I'm here. What did I have to do?\"",
-	"\"Oh, yeah. Kill Anima.\"",
-	"\"You should have invested in security against ghosts.\""
+	"\"Well, I'm here. What did I have to do?\"", # # MAP 01
+	"\"Oh, yeah. Kill Anima.\"",  #02 
+	"\"Better invest in ghost protection.\"", # MAP 03
+	"\"I can possess them without any difficulties.\"", # MAP 04
+	"\"They already know I'm here, I'd better stop time.\"", # MAP 05
+	"\"Satisfactory.\"", # MAP 06
+	"\"Peace of cake.\"", # MAP 07
+	"\"Guess I've never had a chance...\"" # MAP 08
 ]
 
 @onready var animation = $Animation
 @onready var dialogue_label = $DialogueLabel
 
-func change_scene(target: String, d_number = 0) -> void:
+func change_scene(target: String, d_number = 0, dialog_see = false) -> void:
 	''' Selección de diálogo '''
-	%DialogueLabel.text = dialogue[d_number]
+	
 	
 	''' Animación Fade-in'''
 	visible = true
 	animation.play("fade_in")
 	await animation.animation_finished
 	
-	''' Diálogo '''
-	animation.play("dialogue")
-	await animation.animation_finished
+	if dialog_see:
+		%DialogueLabel.text = dialogue[d_number]
+		''' Diálogo '''
+		animation.play("dialogue")
+		await animation.animation_finished
 	
 	''' Cambio de escena '''
 	get_tree().change_scene_to_file(target)

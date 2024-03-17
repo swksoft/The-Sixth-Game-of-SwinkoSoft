@@ -7,7 +7,7 @@ signal level_clear
 
 var alarm = true
 var transition = true
-var no_enemy_count = false
+@export var no_enemy_count = false
 var body_count = 0
 
 @onready var player = get_parent().get_node("Player")
@@ -88,7 +88,7 @@ func _process(delta):
 		alert_mode()
 	
 	''' Si matas a todos los enemigos: '''
-	if GLOBAL.enemies_left <= 0 and !no_enemy_count:
+	if body_count >= GLOBAL.enemies_left and !no_enemy_count:
 		emit_signal("game_over")
 		win()
 	

@@ -167,7 +167,6 @@ collide_with_bodies = false
 
 [node name="Hitbox" type="Area2D" parent="Sprite2D"]
 monitoring = false
-monitorable = false
 
 [node name="CollisionHitbox" type="CollisionShape2D" parent="Sprite2D/Hitbox"]
 shape = SubResource("RectangleShape2D_jt6g3")
