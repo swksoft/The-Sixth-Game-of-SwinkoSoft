@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddicjsil0wy7v"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h7lut"]
+size = Vector2(16, 16)
+
+[node name="EventTrigger" type="Node2D" groups=["trigger"]]
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_h7lut")

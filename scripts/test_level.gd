@@ -28,4 +28,7 @@ func _on_player_instant_win():
 	next_level()
 
 func _on_area_2d_area_entered(area):
+	var player = area.get_parent().get_parent()
+	if player == null || !player.is_in_group("player"): return
+	player.current_state = 2
 	next_level()
