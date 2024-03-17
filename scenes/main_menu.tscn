@@ -35,10 +35,13 @@ layout_mode = 2
 
 [node name="Company" type="Label" parent="CanvasLayer/UpperText/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 10
 text = "SWKsoft presents..."
 
 [node name="Title" type="Label" parent="CanvasLayer/UpperText/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
 text = "The ParaPara Massacre"
 
 [node name="Options" type="BoxContainer" parent="CanvasLayer"]
@@ -59,20 +62,29 @@ layout_mode = 2
 
 [node name="StartButton" type="Button" parent="CanvasLayer/Options/VBoxButtons"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 text = "Start"
+flat = true
+
+[node name="Button" type="Button" parent="CanvasLayer/Options/VBoxButtons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Skip Intro"
 flat = true
 
 [node name="ExitButton" type="Button" parent="CanvasLayer/Options/VBoxButtons"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 text = "Exit"
 flat = true
 
 [node name="Version" type="Label" parent="CanvasLayer"]
-offset_left = 235.0
+offset_left = 216.0
 offset_top = 152.0
-offset_right = 320.0
+offset_right = 304.0
 offset_bottom = 168.0
-text = "Ver. 11.12.2000"
+text = "Ver. 17.03.24.00"
 
 [connection signal="pressed" from="CanvasLayer/Options/VBoxButtons/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Options/VBoxButtons/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Options/VBoxButtons/ExitButton" to="." method="_on_exit_button_pressed"]

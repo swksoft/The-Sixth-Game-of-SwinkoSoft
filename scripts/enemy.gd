@@ -3,7 +3,7 @@ extends CharacterBody2D
 @export_range(1,9) var health = 1
 @export_range(0,3) var enemy_class = 0
 @export_range(0,3) var hp_enemy = 1
-
+@export var flip_h: bool = false
 
 var tier: int
 var death01_sfx = preload("res://assets/sfx/Impact - punch03.wav")
@@ -80,10 +80,12 @@ func tier_check():
 		atlas_texture.region = Rect2(16, 144, 16, 16)
 
 	sprite.texture = atlas_texture
-	#health_label.text = str(health)
 	health_label.text = str(hp_enemy)
 
 func _ready():
+	if flip_h:
+		flip_h = true
+	
 	''' Define Health and Tier, Change sprite: '''
 	tier_check2()
 	
@@ -91,80 +93,17 @@ func _ready():
 	if tier == 1: death_sfx.stream = death01_sfx
 	elif tier == 2: death_sfx.stream = death02_sfx
 	elif tier == 3: death_sfx.stream = death03_sfx
-	
-	#get_damage_from_enemy({"health": 2, "tier": 1})
 
 func get_damage_from_enemy(player_class, hp_player, new_enemy_class, new_hp_enemy, death):
-	#var combat_results = GLOBAL.calcularResultado(player_class, hp_player, enemy_class, hp_enemy)
-	#
-	#var new_enemy_class = combat_results["enemy"][0]
-	#var new_hp_enemy = combat_results["enemy"][1]
-	#
-	#var new_player_class = combat_results["player"][0]
-	#var new_hp_player = combat_results["player"][1]
-	#
 	if !death:
 		enemy_class = new_enemy_class
 		hp_enemy = new_hp_enemy
 	else:
-		print("Muerto")
 		queue_free()
-	#print_debug("NUEVA CLASE: ", new_enemy_class)
-	#print_debug("NUEVA SALUD: ", new_hp_enemy)
-	#print("Auch! Me ataron y ahora mi salud es ", new_hp_enemy, " y mi clase es ", new_enemy_class)
 	tier_check2()
-	#check_death()
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	#var health_difference = health - enemy.health
-	#print_debug(health_difference)
-	
-	''' SI DOS ENEMIGOS IGUALES SE ENFRENTAN '''
-	#if health_difference <= 0: health -= enemy.health
-	
-	#elif health_difference == 1 && tier == enemy.tier and enemy.health != 1 and enemy.health != 4 and enemy.health != 7: health -= 2
-	#elif health_difference == 1 && tier == enemy.tier: health -= 1
-	#'''
-	##elif health_difference == 1 && tier == 1 and enemy.tier == 1: health -= 0
-	#elif health_difference == 2 && tier == enemy.tier: health += 1
-	#elif tier <= 2: health -= 0
-	#elif health_difference == 1 && enemy.tier == tier: health -= 2
-	#'''
-	#elif health_difference <= 2: health -= 1
-	#elif health_difference <= 2: health += 1
-	#elif health_difference >= 2 and health_difference <= 5: health += 1
-	
-
-'''func tier_calculate():
-	var health_divided_by_three = health/3
-	
-	if health_divided_by_three <= 1: tier = 1
-	elif health_divided_by_three <= 2: tier = 2
-	else: tier = 3'''
 	
 func check_death():
-	if health <= 0:
-		queue_free()
+	if health <= 0: queue_free()
 
 func move(direction):
 	''' Get current tile Vector2i: '''
@@ -181,7 +120,6 @@ func move(direction):
 		return
 	
 	global_position = tile_map.map_to_local(target_tile)
-	#sprite.global_position = tile_map.map_to_local(current_tile)
 
 func alert_mode():
 	''' Movimiento en direcciones random (o algo así) '''
@@ -201,12 +139,4 @@ func _process(_delta):
 	''' Chequea modo alerta (Game Over)'''
 	if GLOBAL.time_left <= 0 and GLOBAL.time:
 		await alert_mode()
-
-#func _on_collision(area):
-	#if area.is_in_group("enemy"):
-		#get_damage()
-
-#func _on_player_damage(player):
-#	player.health = health
-#	player.tier_check()
 

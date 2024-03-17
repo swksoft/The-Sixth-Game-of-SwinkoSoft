@@ -5,6 +5,7 @@
 [ext_resource type="TileSet" uid="uid://guvwu0181l8g" path="res://assets/tiles/tiles.tres" id="2_0411m"]
 
 [node name="Map03" instance=ExtResource("1_v1g5y")]
+next_map = "04"
 
 [node name="Camera2D" parent="." index="0"]
 offset = Vector2(0, 98)
@@ -27,3 +28,4 @@ health = 1
 [node name="Enemy" parent="Enemies" index="0" instance=ExtResource("2_78k6x")]
 position = Vector2(88, 88)
 enemy_class = 1
+flip_h = true

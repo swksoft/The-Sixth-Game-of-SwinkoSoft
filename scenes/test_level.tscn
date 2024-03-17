@@ -13,13 +13,13 @@ trans = 3
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(-150, 0)
 anchor_mode = 0
+metadata/_edit_lock_ = true
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("2_u5qqq")
 format = 2
 layer_0/name = "tiles"
 layer_0/z_index = -1
-layer_0/tile_data = PackedInt32Array(262142, 589824, 6, 327678, 589824, 6, 393214, 589824, 6, 458750, 589824, 6, 524286, 589824, 6, 589822, 589824, 7, 589823, 655360, 7, 524288, 655360, 7, 524289, 655360, 7, 524290, 655360, 7, 524291, 655360, 7, 524292, 655360, 7, 524293, 720896, 7, 196613, 720896, 6, 262149, 720896, 6, 327685, 720896, 6, 393221, 720896, 6, 458757, 720896, 6, 131077, 720896, 5, 196606, 589824, 5, 196607, 655360, 5, 131072, 655360, 5, 131073, 655360, 5, 131074, 655360, 5, 131075, 655360, 5, 131076, 655360, 5, 262143, 655360, 6, 196608, 655360, 6, 196609, 655360, 6, 196610, 655360, 6, 196611, 655360, 6, 196612, 655360, 6, 327679, 458752, 6, 393215, 458752, 6, 458751, 458752, 6, 524287, 458752, 6, 262144, 458752, 6, 327680, 458752, 6, 393216, 458752, 6, 458752, 458752, 6, 262145, 524288, 8, 393217, 589824, 8, 458753, 458752, 6, 262146, 655360, 5, 393218, 655360, 7, 458754, 458752, 6, 262147, 655360, 8, 393219, 720896, 8, 458755, 458752, 6, 262148, 458752, 6, 327684, 458752, 6, 393220, 458752, 6, 458756, 458752, 6, 327681, 589824, 6, 327683, 720896, 6)
 layer_1/name = "void"
 layer_1/z_index = -2
 layer_1/navigation_enabled = false
@@ -33,5 +33,10 @@ position = Vector2(-8, 70)
 [node name="Enemies" type="Node" parent="."]
 
 [node name="HUD" parent="." instance=ExtResource("4_l5y45")]
+hide_data = false
+metadata/_edit_lock_ = true
 
+[connection signal="enemy_down" from="Player" to="HUD" method="_on_player_enemy_down"]
+[connection signal="instant_win" from="Player" to="." method="_on_player_instant_win"]
 [connection signal="game_over" from="HUD" to="Player" method="_on_hud_game_over"]
+[connection signal="level_clear" from="HUD" to="." method="_on_hud_level_clear"]

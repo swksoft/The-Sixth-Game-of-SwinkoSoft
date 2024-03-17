@@ -231,6 +231,7 @@ health = 3
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = SubResource("AtlasTexture_ex8ot")
+flip_h = true
 
 [node name="HealthLabel" type="Label" parent="Sprite"]
 offset_left = 8.0

@@ -1,5 +1,8 @@
 extends Sprite2D
 
+signal enemy_down
+signal instant_win
+
 @export_range(0,9) var health = 0
 @export_range(0,3) var hp_player = 0
 @export_range(0,3) var player_class = 0
@@ -8,8 +11,7 @@ var is_moving = false
 var tier = 0
 var attacking = false
 var killed = false
-
-
+var can_reset = false
 
 var current_state
 enum State {
@@ -110,10 +112,16 @@ func _process(_delta):
 		elif Input.is_action_pressed("down"): move(Vector2.DOWN)
 		elif Input.is_action_pressed("left"): move(Vector2.LEFT)
 		elif Input.is_action_pressed("right"): move(Vector2.RIGHT)
-		elif Input.is_action_just_pressed("reset"): TransitionLayer.reset_scene()
 	else:
 		return
-		
+
+func _input(event):
+	if event.is_action_pressed("reset") and can_reset:
+		can_reset = false
+		TransitionLayer.reset_scene()
+	elif event.is_action_pressed("next_level") and OS.is_debug_build():
+		emit_signal("instant_win")
+
 func move(direction: Vector2):
 	''' Get current tile Vector2i: '''
 	var current_tile: Vector2i = tile_map.local_to_map(global_position)
@@ -175,153 +183,36 @@ func move(direction: Vector2):
 	step_sfx.play()
 
 func _on_area_2d_body_entered(enemy):
-	var combat_results: Dictionary = GLOBAL.calcularResultado(player_class, hp_player, enemy.enemy_class, enemy.hp_enemy)
+	if GLOBAL.trans_left <= 0 and player_class == 0:
+		print("pijers")
+		return
+	else:
+		var combat_results: Dictionary = GLOBAL.calcularResultado(player_class, hp_player, enemy.enemy_class, enemy.hp_enemy)
 	
-	var death: bool = false
-	
-	var new_enemy_class = combat_results["enemy"][0]
-	var new_hp_enemy = combat_results["enemy"][1]
-	
-	var new_player_class = combat_results["player"][0]
-	var new_hp_player = combat_results["player"][1]
-	
-	#enemy.get_damage_from_enemy(player_class, hp_player)
-	
-	player_class = new_player_class
-	hp_player = new_hp_player
-	
-	if new_hp_enemy <= 0 or new_enemy_class <= 0:
-		death = true
-		killed = true
-	
-	enemy.get_damage_from_enemy(new_player_class, new_hp_player, new_enemy_class, new_hp_enemy, death)
-	
-	tier_check2()
+		var death: bool = false
+		
+		var new_enemy_class = combat_results["enemy"][0]
+		var new_hp_enemy = combat_results["enemy"][1]
+		
+		var new_player_class = combat_results["player"][0]
+		var new_hp_player = combat_results["player"][1]
+		
+		player_class = new_player_class
+		hp_player = new_hp_player
+		
+		#enemy.get_damage_from_enemy(player_class, hp_player)
+		
+		if new_hp_enemy <= 0 or new_enemy_class <= 0:
+			death = true
+			killed = true
+			emit_signal("enemy_down")
+		
+		enemy.get_damage_from_enemy(new_player_class, new_hp_player, new_enemy_class, new_hp_enemy, death)
+		
+		tier_check2()
 	
 	#print_debug(new_enemy_class)
 	#print_debug(new_hp_enemy)
-	
-	'''
-	if body.has_method("get_damage_from_enemy"):
-		if current_state == 0:
-			if GLOBAL.trans: GLOBAL.trans_left -= 1
-			health += body.health
-			body.get_damage(current_state, health, tier)
-			
-		else:
-			var enemy_health = body.health
-			var enemy_tier = body.tier
-			
-			GLOBAL.enemies_left -= 1
-			
-			body.get_damage(current_state, health, tier)
-			if body.health <= 0: killed = true
-			get_damage_from_enemy({"health": enemy_health, "tier": enemy_tier})
-		
-		tier_check()
-		check_death()
-		
-		attack_sfx.playing = true
-	'''
-func get_damage_from_enemy(enemy):
-	#var health_difference = health - enemy.health
-	#print_debug("DIFERENCIA: ", health_difference)
-	
-	var combat_results = GLOBAL.calcularResultado(player_class, hp_player, enemy.enemy_class, enemy.hp_enemy)
-	
-	var new_enemy_class = combat_results["enemy"][0]
-	var new_hp_enemy = combat_results["enemy"][1]
-	
-	var new_player_class = combat_results["player"][0]
-	var new_hp_player = combat_results["player"][1]
-	
-	tier_check2()
-	#tier_check()
-	#check_death()
-	
-	#if health_difference <= 0: health -= enemy.health
-	#'''
-	#elif health_difference == 1 && enemy.tier == 1: health -= 1
-	#elif health_difference == 1 && enemy.tier > tier: health -= 2
-	#if health_difference <= 2: health -= 1
-	#'''
-	#elif health_difference >= 2 and health_difference <= 4: health += 1
-	
-	# >< 															><
-	'''
-	if health_difference == 0: health -= enemy.health
-	else:
-		
-		match tier:
-			1:
-				# Pierde
-				if health_difference <= -1 and health == 1:
-					if health_difference <= -2 and health_difference >= -5: enemy.health + 1
-					health += -1
-					
-				# Gana
-				elif health_difference >= 1 and health == 2:
-					health += -1
-				# Pierde
-				elif health_difference <= -1 and health == 2:
-					if enemy.health == 3:
-						print("Enemigo pierde 2 de vida")
-						enemy.health += -2
-					if health_difference <= -2:
-						print("recupera vida")
-						enemy.health + 1
-					health = -2
-				#elif health_difference == -1:
-				
-				if health_difference == 1:
-					print("A")
-				elif health_difference == 2:
-					print("B")
-				elif health_difference == -1:
-					print("C")
-				elif health_difference == -2:
-					print("D")
-				elif health_difference <= -2:
-					if health_difference >= -5:
-						print("E")
-						pass
-					print("D")
-				# Health 0 :
-				# NADA
-				# Health -1 :
-				
-				if health_difference == -1 and health == 1:
-					health -= 1
-					# Enemigo pierde -2
-					print("Caso B")
-				# Health -2 :
-				elif health_difference == -1 and health == 2:
-					health -= 2
-					# Enemigo pierde -2
-					print("Caso C")
-				# Health +1 :
-				elif health_difference >= -2:
-					health += 1
-					print("Caso E")
-			2:
-				# Health +1 :
-				if health_difference >= 2 and health_difference <= 4 and health < 6: health += 1
-				elif health_difference >= 2 and health_difference <= 2 and health == 6: health += 1
-			3:
-				# Health +1 :
-				if health_difference >= 2 and health_difference <= 2 and health < 8: health += 1
-				elif health_difference >= 2 and health_difference <= 2 and health == 8: health += 1
-				'''
-	# BOSQUEJO:
-	# TIER 1, 2 y 3: if health_difference <= 0: health -= enemy.health
-	# TIER 1:
-		# if tier == 1 and health_difference >= 2: health += 1
-	# TIER 2:
-		# if tier == 2 and TIER 2: health_difference >= 2 and health_difference <= 5: health += 1
-	# TIER 3:
-		# if tier == 2 and health_difference >= 2 and health_difference <= 3: health += 1
-	
-	
 
 func check_death():
 	''' Personaje pierde víctima (salud no puede bajar de 0)'''
@@ -333,3 +224,6 @@ func check_death():
 func _on_hud_game_over():
 	''' Game Over: cambia a estado ITS_OVER '''
 	current_state = 2
+
+func _on_reset_timer_timeout():
+	can_reset = true

@@ -4,6 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://cevpwgb6r7oag" path="res://scenes/enemy.tscn" id="2_m85gf"]
 
 [node name="Map04" instance=ExtResource("1_wl2oh")]
+time_flag = true
+limit_flag = true
+next_map = "05"
 
 [node name="Camera2D" parent="." index="0"]
 position = Vector2(88, 104)
@@ -20,18 +23,19 @@ position = Vector2(-24, 104)
 [node name="Enemy" parent="Enemies" index="0" instance=ExtResource("2_m85gf")]
 position = Vector2(72, 104)
 enemy_class = 2
+flip_h = true
 
 [node name="Enemy2" parent="Enemies" index="1" instance=ExtResource("2_m85gf")]
 position = Vector2(88, 104)
 enemy_class = 1
+flip_h = true
 
 [node name="Enemy3" parent="Enemies" index="2" instance=ExtResource("2_m85gf")]
 position = Vector2(104, 104)
 enemy_class = 1
+flip_h = true
 
 [node name="Enemy4" parent="Enemies" index="3" instance=ExtResource("2_m85gf")]
 position = Vector2(120, 104)
 enemy_class = 1
-
-[node name="HUD" parent="." index="4"]
-hide_data = false
+flip_h = true
