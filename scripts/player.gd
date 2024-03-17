@@ -154,23 +154,24 @@ func move(direction: Vector2):
 	
 	''' IMPORTANTE '''
 	if raycast.is_colliding():
-		attacking = true
-		
-		#global_position = tile_map.map_to_local(target_tile)
-		
-		sprite.global_position = tile_map.map_to_local(target_tile)
-		
-		animation.play("Attack")
-		blood_particle.emitting = true 
-		await get_tree().create_timer(0.5).timeout
-		
-		sprite.global_position = tile_map.map_to_local(current_tile)
-		
-		attacking = false
-		if health > 0 || killed: 
-			global_position = tile_map.map_to_local(target_tile)
-			killed = false
-		return
+		if raycast.get_collider().get_parent().is_in_group("enemy"):
+			attacking = true
+			
+			#global_position = tile_map.map_to_local(target_tile)
+			
+			sprite.global_position = tile_map.map_to_local(target_tile)
+			
+			animation.play("Attack")
+			blood_particle.emitting = true 
+			await get_tree().create_timer(0.5).timeout
+			
+			sprite.global_position = tile_map.map_to_local(current_tile)
+			
+			attacking = false
+			if health > 0 || killed: 
+				global_position = tile_map.map_to_local(target_tile)
+				killed = false
+			return
 	
 	# Move Player:
 	is_moving = true

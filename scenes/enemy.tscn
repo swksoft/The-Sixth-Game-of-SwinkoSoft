@@ -225,7 +225,8 @@ _data = {
 "death": SubResource("Animation_vpuxw")
 }
 
-[node name="Enemy" type="CharacterBody2D"]
+[node name="Enemy" type="CharacterBody2D" groups=["enemy"]]
+collision_mask = 0
 script = ExtResource("1_suya6")
 health = 3
 

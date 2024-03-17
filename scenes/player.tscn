@@ -127,7 +127,7 @@ _data = {
 "RESET": SubResource("Animation_thw14")
 }
 
-[node name="Player" type="Sprite2D"]
+[node name="Player" type="Sprite2D" groups=["player"]]
 script = ExtResource("1_bqjyo")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
