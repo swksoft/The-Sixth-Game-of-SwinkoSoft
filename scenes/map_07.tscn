@@ -19,43 +19,43 @@ layer_0/tile_data = PackedInt32Array(196603, 131072, 1, 589819, 131072, 1, 19660
 [node name="Player" parent="." index="2"]
 position = Vector2(8, 168)
 
-[node name="Enemy" parent="Enemies" index="0" instance=ExtResource("2_cw7fm")]
+[node name="Enemy17" parent="Enemies" index="0" instance=ExtResource("2_cw7fm")]
 position = Vector2(-24, 120)
 enemy_class = 2
 hp_enemy = 3
 
-[node name="Enemy2" parent="Enemies" index="1" instance=ExtResource("2_cw7fm")]
+[node name="Enemy18" parent="Enemies" index="1" instance=ExtResource("2_cw7fm")]
 position = Vector2(8, 120)
 enemy_class = 1
 hp_enemy = 2
 
-[node name="Enemy3" parent="Enemies" index="2" instance=ExtResource("2_cw7fm")]
+[node name="Enemy19" parent="Enemies" index="2" instance=ExtResource("2_cw7fm")]
 position = Vector2(40, 120)
 enemy_class = 1
 
-[node name="Enemy7" parent="Enemies" index="3" instance=ExtResource("2_cw7fm")]
+[node name="Enemy20" parent="Enemies" index="3" instance=ExtResource("2_cw7fm")]
 position = Vector2(-24, 88)
 enemy_class = 3
 
-[node name="Enemy8" parent="Enemies" index="4" instance=ExtResource("2_cw7fm")]
+[node name="Enemy21" parent="Enemies" index="4" instance=ExtResource("2_cw7fm")]
 position = Vector2(8, 88)
 enemy_class = 3
 hp_enemy = 2
 
-[node name="Enemy9" parent="Enemies" index="5" instance=ExtResource("2_cw7fm")]
+[node name="Enemy22" parent="Enemies" index="5" instance=ExtResource("2_cw7fm")]
 position = Vector2(40, 88)
 enemy_class = 1
 
-[node name="Enemy13" parent="Enemies" index="6" instance=ExtResource("2_cw7fm")]
+[node name="Enemy23" parent="Enemies" index="6" instance=ExtResource("2_cw7fm")]
 position = Vector2(-24, 56)
 enemy_class = 3
 
-[node name="Enemy14" parent="Enemies" index="7" instance=ExtResource("2_cw7fm")]
+[node name="Enemy24" parent="Enemies" index="7" instance=ExtResource("2_cw7fm")]
 position = Vector2(8, 56)
 health = 1
 enemy_class = 3
 
-[node name="Enemy15" parent="Enemies" index="8" instance=ExtResource("2_cw7fm")]
+[node name="Enemy25" parent="Enemies" index="8" instance=ExtResource("2_cw7fm")]
 position = Vector2(40, 56)
 enemy_class = 2
 
