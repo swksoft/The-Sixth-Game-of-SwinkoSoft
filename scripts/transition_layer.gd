@@ -16,6 +16,7 @@ var dialogue := [
 @onready var dialogue_label = $DialogueLabel
 
 func change_scene(target: String, d_number = 0, dialog_see = false) -> void:
+	GLOBAL.during_cutscene = true
 	''' Selección de diálogo '''
 	
 	
@@ -43,6 +44,7 @@ func change_scene(target: String, d_number = 0, dialog_see = false) -> void:
 	#TransitionLayer.get_tree().change_scene_to_file(target)
 
 func reset_scene() -> void:
+	GLOBAL.during_cutscene = true
 	animation.speed_scale = 24
 	animation.play("fade_in")
 	await animation.animation_finished

@@ -3,6 +3,8 @@ extends Node
 var time: bool = false
 var trans: bool = false
 
+var during_cutscene = false
+
 var time_left: int 
 var enemies_left: int
 var trans_left: int
@@ -10,6 +12,9 @@ var combat_count: int = 0
 
 var time_count = 0
 var timer_on = false
+
+func stop_timer():
+	timer_on = false
 
 func calcularResultado(player_class: int, hp_player: int, enemy_class: int , hp_enemy: int) -> Dictionary:
 	print("\n ==============================================================")

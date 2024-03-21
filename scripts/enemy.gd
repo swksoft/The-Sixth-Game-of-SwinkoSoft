@@ -10,7 +10,6 @@ var death01_sfx = preload("res://assets/sfx/Impact - punch03.wav")
 var death02_sfx = preload("res://assets/sfx/Impact - punch05.wav")
 var death03_sfx = preload("res://assets/sfx/Impact - Punch09 - Splat.wav")
 
-
 @onready var health_label = $Sprite/HealthLabel
 @onready var sprite = $Sprite
 @onready var emitter = get_parent().get_parent().get_node("Player")

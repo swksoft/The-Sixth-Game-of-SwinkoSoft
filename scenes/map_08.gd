@@ -1,5 +1,14 @@
 extends Level
 
+func _ready():
+	GLOBAL.stop_timer()
+	''' Datos de nivel '''
+	GLOBAL.time_left = time
+	GLOBAL.trans_left = trans
+	''' Habilitar limite tiempo/movimientos '''
+	GLOBAL.time = time_flag
+	GLOBAL.trans = limit_flag
+
 func next_level():
 	$Node2D.visible = true
 	$Player.visible = false

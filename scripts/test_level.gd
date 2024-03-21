@@ -14,6 +14,7 @@ func next_level():
 	TransitionLayer.change_scene(scene, dialog, true)
 
 func _ready():
+	GLOBAL.during_cutscene = false
 	''' Datos de nivel '''
 	GLOBAL.time_left = time
 	GLOBAL.trans_left = trans
@@ -22,12 +23,15 @@ func _ready():
 	GLOBAL.trans = limit_flag
 
 func _on_hud_level_clear():
+	print("hola2")
 	next_level()
 
 func _on_player_instant_win():
+	print("hola")
 	next_level()
 
 func _on_area_2d_area_entered(area):
+	GLOBAL.during_cutscene = true
 	var player = area.get_parent().get_parent()
 	if player == null || !player.is_in_group("player"): return
 	player.current_state = 2

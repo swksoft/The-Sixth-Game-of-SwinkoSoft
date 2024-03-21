@@ -101,6 +101,9 @@ func _physics_process(_delta):
 	sprite.global_position = sprite.global_position.move_toward(global_position, 1.5)
 
 func _process(_delta):
+	if GLOBAL.during_cutscene:
+		return
+	
 	''' Estado ITS_OVER para Game Over '''
 	if current_state == 2: return
 	
@@ -116,6 +119,9 @@ func _process(_delta):
 		return
 
 func _input(event):
+	if GLOBAL.during_cutscene:
+		return
+
 	if event.is_action_pressed("reset") and can_reset:
 		can_reset = false
 		TransitionLayer.reset_scene()
@@ -158,7 +164,7 @@ func move(direction: Vector2):
 			attacking = true
 			
 			#global_position = tile_map.map_to_local(target_tile)
-			
+			print("white people")
 			sprite.global_position = tile_map.map_to_local(target_tile)
 			
 			animation.play("Attack")
@@ -184,7 +190,6 @@ func move(direction: Vector2):
 
 func _on_area_2d_body_entered(enemy):
 	if GLOBAL.trans_left <= 0 and player_class == 0:
-		print("pijers")
 		return
 	else:
 		var combat_results: Dictionary = GLOBAL.calcularResultado(player_class, hp_player, enemy.enemy_class, enemy.hp_enemy)
@@ -223,6 +228,7 @@ func check_death():
 
 func _on_hud_game_over():
 	''' Game Over: cambia a estado ITS_OVER '''
+	print("pija")
 	current_state = 2
 
 func _on_reset_timer_timeout():

@@ -24,7 +24,7 @@ func _ready():
 		%DataBox.visible = true
 		GLOBAL.timer_on = true
 	
-	''' Cuenta todos los enemigos en pantalla para verificar enemigos en pantalla '''
+	''' Cuenta todos los enemigos en pantalla '''
 	%GameOver.visible = false
 	body_count = 0
 	GLOBAL.enemies_left = enemie_group.size()
@@ -84,8 +84,10 @@ func _process(delta):
 	
 	''' Si te quedas sin movimientos: '''
 	if GLOBAL.time_left <= 0:
-		emit_signal("game_over")
 		alert_mode()
+		
+		emit_signal("game_over")
+		
 	
 	''' Si matas a todos los enemigos: '''
 	if body_count >= GLOBAL.enemies_left and !no_enemy_count:
@@ -100,7 +102,6 @@ func _process(delta):
 func _on_restart_button_pressed():
 	TransitionLayer.reset_scene()
 	#get_tree().reload_current_scene.call_deferred()
-
 
 func _on_player_enemy_down():
 	body_count += 1
