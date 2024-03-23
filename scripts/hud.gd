@@ -15,6 +15,7 @@ var body_count = 0
 @onready var animation = $Animation
 @onready var alarm_sfx = $AlarmSFX
 @onready var enemie_group = enemies.get_children()
+@onready var pause_menu = get_parent().get_node("PauseMenu")
 
 func _ready():
 	if hide_data:
@@ -33,6 +34,7 @@ func _ready():
 	GLOBAL.combat_count = 0
 
 func alert_mode():
+	pause_menu.queue_free()
 	''' Player no se moverá en Game Over '''
 	animation.play("gamer_over")
 	
@@ -72,32 +74,26 @@ func _process(delta):
 	else:
 		%TransLabel.add_theme_color_override("font_color", Color("ffffff"))
 	%TransLabel.text = str(GLOBAL.trans_left)
-	if (GLOBAL.timer_on):
+	if GLOBAL.timer_on:
 		GLOBAL.time_count += delta
-		var secs = fmod(GLOBAL.time_count, 60)
 		var mins = fmod(GLOBAL.time_count, 60*60) / 60
-		var mil = fmod (GLOBAL.time_count, 1) * 1000
+		var mil = fmod (GLOBAL.time_count, 1000)
 		
-		var time_passed = "%02d ' %02d '' %02d" % [mins, secs, mil]
+		var mil_formatted = str(mil).pad_decimals(2)
+		
+		var time_passed = "%02d : %s" % [mins, mil_formatted]
 		
 		%TimeLabel.text = str(time_passed)
 	
 	''' Si te quedas sin movimientos: '''
 	if GLOBAL.time_left <= 0:
 		alert_mode()
-		
 		emit_signal("game_over")
-		
 	
 	''' Si matas a todos los enemigos: '''
 	if body_count >= GLOBAL.enemies_left and !no_enemy_count:
 		emit_signal("game_over")
 		win()
-	
-	''' Si te quedas sin transformaciones: '''
-	#if GLOBAL.trans_left <= 0:
-#		emit_signal("game_over")
-		#alert_mode()
 
 func _on_restart_button_pressed():
 	TransitionLayer.reset_scene()

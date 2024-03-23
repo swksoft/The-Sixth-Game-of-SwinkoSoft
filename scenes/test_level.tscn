@@ -1,11 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://525i1bgcww8b"]
+[gd_scene load_steps=6 format=3 uid="uid://525i1bgcww8b"]
 
 [ext_resource type="Script" path="res://scripts/test_level.gd" id="1_l767p"]
 [ext_resource type="PackedScene" uid="uid://ckyq2d54v1ani" path="res://scenes/player.tscn" id="1_lxrc1"]
 [ext_resource type="TileSet" uid="uid://guvwu0181l8g" path="res://assets/tiles/tiles.tres" id="2_u5qqq"]
 [ext_resource type="PackedScene" uid="uid://biqtg8uhweure" path="res://scenes/hud.tscn" id="4_l5y45"]
+[ext_resource type="PackedScene" uid="uid://brlx60vuswd51" path="res://scenes/pause_menu.tscn" id="5_oms3h"]
 
 [node name="TestLevel" type="Node2D"]
+process_mode = 1
 script = ExtResource("1_l767p")
 time = 15
 trans = 3
@@ -34,8 +36,11 @@ position = Vector2(-8, 70)
 [node name="Enemies" type="Node" parent="." groups=["enemy"]]
 
 [node name="HUD" parent="." instance=ExtResource("4_l5y45")]
+process_mode = 1
 hide_data = false
 metadata/_edit_lock_ = true
+
+[node name="PauseMenu" parent="." instance=ExtResource("5_oms3h")]
 
 [connection signal="enemy_down" from="Player" to="HUD" method="_on_player_enemy_down"]
 [connection signal="instant_win" from="Player" to="." method="_on_player_instant_win"]

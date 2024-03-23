@@ -228,7 +228,6 @@ func check_death():
 
 func _on_hud_game_over():
 	''' Game Over: cambia a estado ITS_OVER '''
-	print("pija")
 	current_state = 2
 
 func _on_reset_timer_timeout():

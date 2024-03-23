@@ -23,11 +23,9 @@ func _ready():
 	GLOBAL.trans = limit_flag
 
 func _on_hud_level_clear():
-	print("hola2")
 	next_level()
 
 func _on_player_instant_win():
-	print("hola")
 	next_level()
 
 func _on_area_2d_area_entered(area):

@@ -122,6 +122,7 @@ func move(direction):
 
 func alert_mode():
 	''' Movimiento en direcciones random (o algo así) '''
+	$Hitbox.monitorable = false
 	animation.play("alert_mode")
 	var rng = randf()
 	
