@@ -1,20 +1,16 @@
 extends Node
 
-var current_track = ""
-var bus
-@export var music_track = "" # (String, FILE, "*.ogg")
+@onready var music = $Music
+@onready var sfx = $SFX
 
-func _ready():
-	bus = AudioServer.get_bus_index($Track.bus)
-	if music_track != "":
-		Music.play(music_track)
+func stop_music():
+	music.playing = false
+
+func play_music(song: Resource):
+	music.stream = song
+	music.play()
+
+func play_sfx(sound):
+	sfx.stream = sound
+	sfx.play()
 	pass
-
-func play(stream):
-	if current_track == "a":
-		$B.stream = load(stream)
-		current_track = "b"
-	else:
-		$A.stream = load(stream)
-		current_track = "a"
-

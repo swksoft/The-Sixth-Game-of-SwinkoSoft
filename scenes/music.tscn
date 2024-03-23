@@ -1,9 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://cxck1vh2a667f"]
+[gd_scene load_steps=3 format=3 uid="uid://cxck1vh2a667f"]
 
 [ext_resource type="Script" path="res://scripts/music.gd" id="1_15ptb"]
+[ext_resource type="AudioStream" uid="uid://v8bb5ws5qsp2" path="res://assets/music/04. Nuclear Mutation.mp3" id="2_fbvh1"]
 
 [node name="Music" type="Node"]
 script = ExtResource("1_15ptb")
 
-[node name="Track" type="AudioStreamPlayer" parent="."]
+[node name="Music" type="AudioStreamPlayer" parent="."]
 bus = &"Music"
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_fbvh1")
+volume_db = -10.0
+bus = &"SFX"

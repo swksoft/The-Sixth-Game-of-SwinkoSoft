@@ -20,6 +20,8 @@ enum State {
 	ITS_OVER
 }
 
+var cant_kill_sfx = preload("res://assets/sfx/error1.wav")
+
 @onready var tile_map = get_parent().get_node("TileMap")
 @onready var sprite = $Sprite2D
 #@onready var raycast = $RayCast2D
@@ -168,7 +170,7 @@ func move(direction: Vector2):
 			sprite.global_position = tile_map.map_to_local(target_tile)
 			
 			animation.play("Attack")
-			blood_particle.emitting = true 
+			#blood_particle.emitting = true 
 			await get_tree().create_timer(0.5).timeout
 			
 			sprite.global_position = tile_map.map_to_local(current_tile)
@@ -189,9 +191,13 @@ func move(direction: Vector2):
 	step_sfx.play()
 
 func _on_area_2d_body_entered(enemy):
+	
 	if GLOBAL.trans_left <= 0 and player_class == 0:
+		Music.play_sfx(cant_kill_sfx)
 		return
 	else:
+		blood_particle.emitting = true 
+		attack_sfx.play()
 		var combat_results: Dictionary = GLOBAL.calcularResultado(player_class, hp_player, enemy.enemy_class, enemy.hp_enemy)
 	
 		var death: bool = false

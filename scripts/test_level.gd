@@ -8,12 +8,17 @@ class_name Level
 @export var next_map : String = "01"
 @export_range(0,8) var dialog: int = 0
 
+func current_level():
+	pass
+
 func next_level():
 	var scene: String = "res://scenes/map_%s.tscn" % next_map
 	
 	TransitionLayer.change_scene(scene, dialog, true)
 
 func _ready():
+	current_level()
+	
 	GLOBAL.during_cutscene = false
 	''' Datos de nivel '''
 	GLOBAL.time_left = time

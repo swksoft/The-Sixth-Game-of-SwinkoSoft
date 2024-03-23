@@ -9,6 +9,7 @@ var tier: int
 var death01_sfx = preload("res://assets/sfx/Impact - punch03.wav")
 var death02_sfx = preload("res://assets/sfx/Impact - punch05.wav")
 var death03_sfx = preload("res://assets/sfx/Impact - Punch09 - Splat.wav")
+var cant_kill_sfx = preload("res://assets/sfx/error1.wav")
 
 @onready var health_label = $Sprite/HealthLabel
 @onready var sprite = $Sprite
@@ -89,15 +90,22 @@ func _ready():
 	tier_check2()
 	
 	''' SFX '''
-	if tier == 1: death_sfx.stream = death01_sfx
-	elif tier == 2: death_sfx.stream = death02_sfx
-	elif tier == 3: death_sfx.stream = death03_sfx
+	#if tier == 1: death_sfx.stream = death01_sfx
+	#elif tier == 2: death_sfx.stream = death02_sfx
+	#elif tier == 3: death_sfx.stream = death03_sfx
+	
 
 func get_damage_from_enemy(player_class, hp_player, new_enemy_class, new_hp_enemy, death):
 	if !death:
+		
+		
 		enemy_class = new_enemy_class
 		hp_enemy = new_hp_enemy
 	else:
+		if enemy_class == 1: Music.play_sfx(death01_sfx)
+		if enemy_class == 2: Music.play_sfx(death02_sfx)
+		if enemy_class == 3: Music.play_sfx(death03_sfx)
+		
 		queue_free()
 	tier_check2()
 	

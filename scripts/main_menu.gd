@@ -40,5 +40,6 @@ func _on_start_button_pressed():
 	TransitionLayer.change_scene("res://scenes/map_01.tscn", false)
 
 func _on_button_pressed():
+	Music.play_music(load("res://assets/music/04. Nuclear Mutation.mp3"))
 	GLOBAL.time_count = 0.0
 	TransitionLayer.change_scene("res://scenes/map_05.tscn", false)

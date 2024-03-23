@@ -34,7 +34,7 @@ func _ready():
 	GLOBAL.combat_count = 0
 
 func alert_mode():
-	pause_menu.queue_free()
+	#pause_menu.queue_free()
 	''' Player no se moverá en Game Over '''
 	animation.play("gamer_over")
 	
