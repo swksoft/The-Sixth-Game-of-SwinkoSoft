@@ -1,6 +1,8 @@
 extends Node2D
 class_name Level
 
+var time_left = time
+
 @export var time_flag: bool
 @export var limit_flag: bool
 @export var time = 1
@@ -26,6 +28,8 @@ func _ready():
 	''' Habilitar limite tiempo/movimientos '''
 	GLOBAL.time = time_flag
 	GLOBAL.trans = limit_flag
+	
+	GLOBAL.during_game_over = false
 
 func _on_hud_level_clear():
 	next_level()

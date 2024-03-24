@@ -1,6 +1,8 @@
 extends Sprite2D
 
 signal enemy_down
+signal player_step
+signal player_trans
 signal instant_win
 
 @export_range(0,9) var health = 0
@@ -46,7 +48,7 @@ func tier_check2():
 		3:
 			atlas_texture.region = Rect2(32, 144, 16, 16)
 		_:
-			print("PLAYER ES FANTASMA\n")
+			#print("PLAYER ES FANTASMA\n")
 			
 			atlas_texture.region = Rect2(0, 144, 16, 16)
 	
@@ -166,7 +168,6 @@ func move(direction: Vector2):
 			attacking = true
 			
 			#global_position = tile_map.map_to_local(target_tile)
-			print("white people")
 			sprite.global_position = tile_map.map_to_local(target_tile)
 			
 			animation.play("Attack")
@@ -186,12 +187,12 @@ func move(direction: Vector2):
 	global_position = tile_map.map_to_local(target_tile)
 	sprite.global_position = tile_map.map_to_local(current_tile)
 	
-	if GLOBAL.time: GLOBAL.time_left -= 1
+	#if GLOBAL.time: GLOBAL.time_left -= 1
+	emit_signal("player_step")
 	
 	step_sfx.play()
 
 func _on_area_2d_body_entered(enemy):
-	
 	if GLOBAL.trans_left <= 0 and player_class == 0:
 		Music.play_sfx(cant_kill_sfx)
 		return
@@ -207,6 +208,11 @@ func _on_area_2d_body_entered(enemy):
 		
 		var new_player_class = combat_results["player"][0]
 		var new_hp_player = combat_results["player"][1]
+		
+		var transform_flag = combat_results["player"][2]
+		
+		#print(transform_flag)
+		if transform_flag: emit_signal("player_trans")
 		
 		player_class = new_player_class
 		hp_player = new_hp_player
@@ -234,6 +240,7 @@ func check_death():
 
 func _on_hud_game_over():
 	''' Game Over: cambia a estado ITS_OVER '''
+	GLOBAL.during_game_over = true
 	current_state = 2
 
 func _on_reset_timer_timeout():

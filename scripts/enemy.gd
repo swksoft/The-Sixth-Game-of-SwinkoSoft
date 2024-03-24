@@ -11,6 +11,7 @@ var death02_sfx = preload("res://assets/sfx/Impact - punch05.wav")
 var death03_sfx = preload("res://assets/sfx/Impact - Punch09 - Splat.wav")
 var cant_kill_sfx = preload("res://assets/sfx/error1.wav")
 
+@onready var bloodstain_scene: PackedScene = preload("res://scenes/bloodstain.tscn")
 @onready var health_label = $Sprite/HealthLabel
 @onready var sprite = $Sprite
 @onready var emitter = get_parent().get_parent().get_node("Player")
@@ -105,6 +106,10 @@ func get_damage_from_enemy(player_class, hp_player, new_enemy_class, new_hp_enem
 		if enemy_class == 1: Music.play_sfx(death01_sfx)
 		if enemy_class == 2: Music.play_sfx(death02_sfx)
 		if enemy_class == 3: Music.play_sfx(death03_sfx)
+		
+		var bloodstain = bloodstain_scene.instantiate()
+		bloodstain.position = self.global_position
+		get_parent().get_parent().get_node("Enemies").add_child(bloodstain)
 		
 		queue_free()
 	tier_check2()

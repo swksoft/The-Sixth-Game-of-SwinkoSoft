@@ -1,3 +1,13 @@
-[gd_scene format=3 uid="uid://cf58r6aj8l046"]
+[gd_scene load_steps=3 format=3 uid="uid://cf58r6aj8l046"]
+
+[ext_resource type="Texture2D" uid="uid://bs0cq12ffcvpm" path="res://assets/tiles/tilemap_packed.png" id="1_w02jl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sq034"]
+atlas = ExtResource("1_w02jl")
+region = Rect2(96, 80, 16, 16)
 
 [node name="Bloodstain" type="Node2D"]
+z_index = -1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_sq034")

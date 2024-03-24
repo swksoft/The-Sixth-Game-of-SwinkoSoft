@@ -2,12 +2,13 @@ extends Node
 
 var time: bool = false
 var trans: bool = false
-
+var during_game_over = false
 var during_cutscene = false
 
 var time_left: int 
 var enemies_left: int
 var trans_left: int
+
 var combat_count: int = 0
 
 var best_time = load_best_time()
@@ -26,12 +27,13 @@ func calcularResultado(player_class: int, hp_player: int, enemy_class: int , hp_
 	
 	# Por si las dudas
 	#var death: bool = false
+	var transform_flag: bool = false
 	var old_player_class = player_class
 	var old_enemy_class = enemy_class
 	var old_hp_player = hp_player
 	var old_hp_enemy = hp_enemy
 	
-	print(old_hp_player)
+	#print(old_hp_player)
 	
 	var combat_results = {}
 	'''
@@ -47,7 +49,8 @@ func calcularResultado(player_class: int, hp_player: int, enemy_class: int , hp_
 		hp_player += hp_enemy
 		enemy_class = 0
 		hp_enemy = 0
-		if GLOBAL.trans: GLOBAL.trans_left -= 1
+		#if GLOBAL.trans: transform_flag = true#GLOBAL.trans_left -= 1
+		transform_flag = true
 		#print("Absorción\n")
 		
 	# Si ambas clases son iguales:
@@ -71,7 +74,7 @@ func calcularResultado(player_class: int, hp_player: int, enemy_class: int , hp_
 			enemy_class = 0
 			
 	else:
-		print(old_hp_player)
+		#print(old_hp_player)
 		match enemy_class:
 			1: # ESCLAVO
 				match player_class:
@@ -124,7 +127,7 @@ func calcularResultado(player_class: int, hp_player: int, enemy_class: int , hp_
 	#if (enemy_class >= 2 and hp_enemy <= 0 and (old_player_class != 0 and old_hp_player != old_hp_enemy) and old_player_class != old_enemy_class):
 		enemy_class -= 1
 		hp_enemy = 3 #ESTO EST+A MAL PORQUE NO ACARREA DAÑO
-		print("\n === Level Down Enemy \n ")
+		#print("\n === Level Down Enemy \n ")
 	
 	''' Level Up '''
 	if hp_enemy > 3:
@@ -146,11 +149,13 @@ func calcularResultado(player_class: int, hp_player: int, enemy_class: int , hp_
 			hp_player = 0
 			#print("\n === Can't Level up Player\n ")
 
-	combat_results["player"] = [player_class, hp_player]
+	combat_results["player"] = [player_class, hp_player, transform_flag]
 	combat_results["enemy"] = [enemy_class, hp_enemy]
 	
 	#print("STATS PLAYER DESPUES: ", combat_results["player"])
 	#print("STATS ENEMIGO DESPUES: ", combat_results["enemy"], "\n")
+	
+	#print(transform_flag)
 	
 	combat_count += 1
 	

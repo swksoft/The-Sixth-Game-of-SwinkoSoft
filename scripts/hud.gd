@@ -17,13 +17,25 @@ var body_count = 0
 @onready var enemie_group = enemies.get_children()
 @onready var pause_menu = get_parent().get_node("PauseMenu")
 
+@onready var map_info = get_parent().get_parent().get_child(3)
+
+@onready var enemies_left = GLOBAL.enemies_left
+@onready var trans_left = GLOBAL.trans_left
+@onready var time_left = GLOBAL.time_left
+
 func _ready():
+	print(map_info.time)
+	
 	if hide_data:
 		%DataBox.visible = false
 		GLOBAL.timer_on = false
 	else:
 		%DataBox.visible = true
 		GLOBAL.timer_on = true
+		
+		%KillsLabel.text = str(body_count) + "/" + str(enemies_left)
+		%TransLabel.text = str(trans_left)
+		%StepsLabel.text = str(time_left)
 	
 	''' Cuenta todos los enemigos en pantalla '''
 	%GameOver.visible = false
@@ -49,31 +61,12 @@ func alert_mode():
 func win():
 	%DataBox.visible = false
 	emit_signal("level_clear")
-	''' Activar bandera una vez '''
-	'''
-	if transition:
-		transition = false
-		
-		%DataBox.visible = false
-		
-		await get_tree().create_timer(1.0).timeout
-		
-		Cambia de escena con transición
-		TransitionLayer.change_scene("res://scenes/test_level.tscn")
-		'''
+	
 func _process(delta):
 	if hide_data:
 		return
 	''' Gestor de HUD: '''
-	%StepsLabel.text = str(GLOBAL.time_left)
-	if !no_enemy_count:
-		%KillsLabel.text = str(body_count) + "/" + str(GLOBAL.enemies_left)
 	
-	if GLOBAL.trans_left <= 0:
-		%TransLabel.add_theme_color_override("font_color", Color("ff0000"))
-	else:
-		%TransLabel.add_theme_color_override("font_color", Color("ffffff"))
-	%TransLabel.text = str(GLOBAL.trans_left)
 	if GLOBAL.timer_on:
 		GLOBAL.time_count += delta
 		var mins = fmod(GLOBAL.time_count, 60*60) / 60
@@ -84,20 +77,33 @@ func _process(delta):
 		var time_passed = "%02d : %s" % [mins, mil_formatted]
 		
 		%TimeLabel.text = str(time_passed)
-	
-	''' Si te quedas sin movimientos: '''
-	if GLOBAL.time_left <= 0:
-		alert_mode()
-		emit_signal("game_over")
-	
-	''' Si matas a todos los enemigos: '''
-	if body_count >= GLOBAL.enemies_left and !no_enemy_count:
-		emit_signal("game_over")
-		win()
 
 func _on_restart_button_pressed():
 	TransitionLayer.reset_scene()
 	#get_tree().reload_current_scene.call_deferred()
 
 func _on_player_enemy_down():
+	''' KILL COUNT '''
 	body_count += 1
+	
+	''' Si matas a todos los enemigos: '''
+	if body_count >= GLOBAL.enemies_left and !no_enemy_count:
+		emit_signal("game_over")
+		win()
+		
+	%KillsLabel.text = str(body_count) + "/" + str(GLOBAL.enemies_left)
+
+func _on_player_player_trans():
+	if GLOBAL.trans_left <= 0:
+		%TransLabel.add_theme_color_override("font_color", Color("ff0000"))
+	else:
+		%TransLabel.add_theme_color_override("font_color", Color("ffffff"))
+	%TransLabel.text = str(GLOBAL.trans_left)
+
+func _on_player_player_step():
+	''' Si te quedas sin movimientos: '''
+	GLOBAL.time_left -= 1
+	if GLOBAL.time_left <= 0:
+		alert_mode()
+		emit_signal("game_over")
+	%StepsLabel.text = str(GLOBAL.time_left)
