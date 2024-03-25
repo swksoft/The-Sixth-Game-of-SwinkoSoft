@@ -15,8 +15,6 @@ func _ready():
 	GLOBAL.time = time_flag
 	GLOBAL.trans = limit_flag
 	
-	''' save time '''
-	
 
 func next_level():
 	save_time()

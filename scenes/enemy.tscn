@@ -258,3 +258,6 @@ libraries = {
 
 [node name="DeathSFX" type="AudioStreamPlayer" parent="."]
 volume_db = -10.0
+
+[node name="DamageNumber" type="Node2D" parent="."]
+position = Vector2(-40, -15)

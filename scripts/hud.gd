@@ -2,6 +2,7 @@ extends Control
 
 signal game_over
 signal level_clear
+signal cant_transform
 
 @export var hide_data: bool = false
 
@@ -14,18 +15,33 @@ var body_count = 0
 @onready var enemies = get_parent().get_node("Enemies")
 @onready var animation = $Animation
 @onready var alarm_sfx = $AlarmSFX
-@onready var enemie_group = enemies.get_children()
+@onready var enemy_group = enemies.get_children()
 @onready var pause_menu = get_parent().get_node("PauseMenu")
 
-@onready var map_info = get_parent().get_parent().get_child(3)
+@onready var map_info = get_parent().get_parent().get_child(0)
+@onready var steps_left = map_info.time
+@onready var trans_left: int = map_info.trans
+@onready var enemies_left = 0
 
-@onready var enemies_left = GLOBAL.enemies_left
-@onready var trans_left = GLOBAL.trans_left
-@onready var time_left = GLOBAL.time_left
+#@onready var enemies_left = GLOBAL.enemies_left
+#@onready var trans_left = GLOBAL.trans_left
+#@onready var time_left = GLOBAL.time_left
 
 func _ready():
-	print(map_info.time)
+	if trans_left <= 0:
+		emit_signal("cant_transform")
 	
+	''' Oculta Game_over()'''
+	%GameOver.visible = false
+	
+	''' Cuenta todos los enemigos en pantalla '''
+	enemies_left = enemy_group.size()
+	#GLOBAL.enemies_left = enemie_group.size()
+	#if GLOBAL.enemies_left == 0:
+		#no_enemy_count = true
+	#GLOBAL.combat_count = 0
+	
+	''' Sí '''
 	if hide_data:
 		%DataBox.visible = false
 		GLOBAL.timer_on = false
@@ -33,17 +49,9 @@ func _ready():
 		%DataBox.visible = true
 		GLOBAL.timer_on = true
 		
-		%KillsLabel.text = str(body_count) + "/" + str(enemies_left)
+		%StepsLabel.text = str(steps_left)
 		%TransLabel.text = str(trans_left)
-		%StepsLabel.text = str(time_left)
-	
-	''' Cuenta todos los enemigos en pantalla '''
-	%GameOver.visible = false
-	body_count = 0
-	GLOBAL.enemies_left = enemie_group.size()
-	if GLOBAL.enemies_left == 0:
-		no_enemy_count = true
-	GLOBAL.combat_count = 0
+		%KillsLabel.text = str(body_count) + "/" + str(enemies_left)
 
 func alert_mode():
 	#pause_menu.queue_free()
@@ -87,18 +95,20 @@ func _on_player_enemy_down():
 	body_count += 1
 	
 	''' Si matas a todos los enemigos: '''
-	if body_count >= GLOBAL.enemies_left and !no_enemy_count:
+	if body_count >= enemies_left:
 		emit_signal("game_over")
 		win()
 		
-	%KillsLabel.text = str(body_count) + "/" + str(GLOBAL.enemies_left)
+	%KillsLabel.text = str(body_count) + "/" + str(enemies_left)
 
 func _on_player_player_trans():
-	if GLOBAL.trans_left <= 0:
+	trans_left -= 1
+	if trans_left <= 0:
+		emit_signal("cant_transform")
 		%TransLabel.add_theme_color_override("font_color", Color("ff0000"))
 	else:
 		%TransLabel.add_theme_color_override("font_color", Color("ffffff"))
-	%TransLabel.text = str(GLOBAL.trans_left)
+	%TransLabel.text = str(trans_left)
 
 func _on_player_player_step():
 	''' Si te quedas sin movimientos: '''

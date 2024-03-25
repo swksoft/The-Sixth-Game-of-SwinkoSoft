@@ -14,6 +14,7 @@ var tier = 0
 var attacking = false
 var killed = false
 var can_reset = false
+var can_transform = true
 
 var current_state
 enum State {
@@ -193,7 +194,7 @@ func move(direction: Vector2):
 	step_sfx.play()
 
 func _on_area_2d_body_entered(enemy):
-	if GLOBAL.trans_left <= 0 and player_class == 0:
+	if !can_transform and player_class == 0:
 		Music.play_sfx(cant_kill_sfx)
 		return
 	else:
@@ -245,3 +246,6 @@ func _on_hud_game_over():
 
 func _on_reset_timer_timeout():
 	can_reset = true
+
+func _on_hud_cant_transform():
+	can_transform = false

@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://525i1bgcww8b"]
+[gd_scene load_steps=6 format=3 uid="uid://525i1bgcww8b"]
 
 [ext_resource type="Script" path="res://scripts/test_level.gd" id="1_l767p"]
 [ext_resource type="PackedScene" uid="uid://ckyq2d54v1ani" path="res://scenes/player.tscn" id="1_lxrc1"]
 [ext_resource type="TileSet" uid="uid://guvwu0181l8g" path="res://assets/tiles/tiles.tres" id="2_u5qqq"]
-[ext_resource type="PackedScene" uid="uid://cf58r6aj8l046" path="res://scenes/bloodstain.tscn" id="3_btrss"]
 [ext_resource type="PackedScene" uid="uid://biqtg8uhweure" path="res://scenes/hud.tscn" id="4_l5y45"]
 [ext_resource type="PackedScene" uid="uid://brlx60vuswd51" path="res://scenes/pause_menu.tscn" id="5_oms3h"]
 
@@ -33,9 +32,6 @@ layer_2/tile_data = PackedInt32Array(983057, 196608, 2, 131073, 589824, 0, 19660
 
 [node name="Bloodstain" type="Node" parent="."]
 
-[node name="Bloodstain" parent="Bloodstain" instance=ExtResource("3_btrss")]
-position = Vector2(-8, 72)
-
 [node name="Player" parent="." instance=ExtResource("1_lxrc1")]
 position = Vector2(-8, 70)
 
@@ -52,5 +48,6 @@ metadata/_edit_lock_ = true
 [connection signal="instant_win" from="Player" to="." method="_on_player_instant_win"]
 [connection signal="player_step" from="Player" to="HUD" method="_on_player_player_step"]
 [connection signal="player_trans" from="Player" to="HUD" method="_on_player_player_trans"]
+[connection signal="cant_transform" from="HUD" to="Player" method="_on_hud_cant_transform"]
 [connection signal="game_over" from="HUD" to="Player" method="_on_hud_game_over"]
 [connection signal="level_clear" from="HUD" to="." method="_on_hud_level_clear"]

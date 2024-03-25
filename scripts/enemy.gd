@@ -11,13 +11,15 @@ var death02_sfx = preload("res://assets/sfx/Impact - punch05.wav")
 var death03_sfx = preload("res://assets/sfx/Impact - Punch09 - Splat.wav")
 var cant_kill_sfx = preload("res://assets/sfx/error1.wav")
 
-@onready var bloodstain_scene: PackedScene = preload("res://scenes/bloodstain.tscn")
+@onready var bloodstain_scene: PackedScene = preload("res://scenes/vfx/bloodstain.tscn")
 @onready var health_label = $Sprite/HealthLabel
 @onready var sprite = $Sprite
 @onready var emitter = get_parent().get_parent().get_node("Player")
 @onready var animation = $Animation
 @onready var tile_map = get_parent().get_parent().get_node("TileMap")
 @onready var death_sfx = $DeathSFX
+@onready var damage_number = $DamageNumber
+
 
 func get_damage(player_state, player_health, player_tier):
 	death_sfx.play()
@@ -97,9 +99,10 @@ func _ready():
 	
 
 func get_damage_from_enemy(player_class, hp_player, new_enemy_class, new_hp_enemy, death):
+	#DamageNumbers.display_number(hp_enemy, damage_number.global_position)
+	DamageNumbers.display_level_text(damage_number.global_position, true)
+	
 	if !death:
-		
-		
 		enemy_class = new_enemy_class
 		hp_enemy = new_hp_enemy
 	else:
